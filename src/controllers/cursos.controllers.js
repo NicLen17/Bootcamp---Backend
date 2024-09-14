@@ -2,7 +2,7 @@ serviciosDeCursos = require('../services/cursos.services')
 
 const obtenerTodosLosCursos = async (req, res) => {
     const result = await serviciosDeCursos.obtenerTodosLosCursos()
-
+    console.log(result)
     if (result.statusCode === 200){
         res.status(200).json(result.cursos)
     } else {
@@ -11,5 +11,5 @@ const obtenerTodosLosCursos = async (req, res) => {
 }
 
 module.exports = {
-  crearCurso
+  obtenerTodosLosCursos
 }

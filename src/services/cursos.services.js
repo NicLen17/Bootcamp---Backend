@@ -1,9 +1,8 @@
 const CursoModel = require('../models/cursos.schema')
 
-const crearCurso = async () => {
+const obtenerTodosLosCursos = async () => {
   try {
     const cursos = await CursoModel.find();
-
     return {
       cursos,
       statusCode: 200,
@@ -18,5 +17,5 @@ const crearCurso = async () => {
 }
 
 module.exports = {
-  crearCurso
+  obtenerTodosLosCursos
 }
