@@ -1,7 +1,7 @@
-const UsuarioModel = require("../models/usuarios.schema")
+const Usuario = require("../models/usuarios.schema")
 const listarUsuarios = async () => {
     try {
-      const usuarios = await UsuarioModel.find()
+      const usuarios = await Usuario.find()
       return usuarios
     } catch (error) {
       console.log(error)
