@@ -2,7 +2,7 @@ const CursoModel = require('../models/cursos.schema')
 
 const obtenerUnCurso = async (id) => {
   try {
-    const cursos = await CursoModel.findById(id);
+    const curso = await CursoModel.findById(id);
     return {
       curso,
       statusCode: 200,

@@ -1,8 +1,8 @@
 serviciosDeCursos = require('../services/cursos.services')
 
 const obtenerUnCurso = async (req, res) => {
-    const result = await serviciosDeCursos.obtenerUnCurso(req.params.idProducto)
-
+    const result = await serviciosDeCursos.obtenerUnCurso(req.params.idCurso)
+    console.log(result)
     if (result.statusCode === 200){
         res.status(200).json(result.curso)
     } else {
