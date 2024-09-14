@@ -1,6 +1,6 @@
 const CursoModel = require('../models/cursos.schema')
 
-const crearCurso = async () => {
+const crearCurso = async (body) => {
   try {
     const curso = new CursoModel(body);
     await curso.save();

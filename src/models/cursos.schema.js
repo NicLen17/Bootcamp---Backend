@@ -23,7 +23,7 @@ const CursosSchema = new Schema({
   contenido: {
     type: [String],
     validate: {
-      function(array) {
+      validator: function(array) {
         return array.every(url => /^https?:\/\/.+\.(mp4|mov|avi|mkv|flv)$/.test(url));
       },
       message: 'Cada URL de video debe ser válida y en formato mp4, mov, avi, mkv o flv'
