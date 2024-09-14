@@ -75,3 +75,6 @@ const CursosSchema = new Schema({
     default: true
   },
 })
+
+const CursoModel = model('cursos', CursosSchema)
+module.exports = CursoModel
