@@ -45,12 +45,25 @@ const crearCurso = async (body) => {
       msg: "Error al crear curso",
       statusCode: 500,
       error
-  };
+    };
   }
 }
+
+const eliminarCurso = async (id) => {
+  try {
+    const curso = await CursoModel.findByIdAndDelete(id);
+    if (!curso) {
+      return { msg: "Curso no encontrado", statusCode: 404 };
+    }
+    return { msg: "Curso eliminado", statusCode: 200 };
+  } catch (error) {
+    return { msg: "Error al eliminar curso", statusCode: 500, error };
+  }
+};
 
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
-  crearCurso
+  crearCurso,
+  eliminarCurso
 }
