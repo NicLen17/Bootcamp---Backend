@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const usuarioSchema = new mongoose.Schema({
   nombre: {
     type: String,
-    required: true,
+    required: [true, "El nombre es obligatorio"],
     trim: true,
     minLength: 4,
     maxLength: 20,
@@ -12,8 +12,8 @@ const usuarioSchema = new mongoose.Schema({
   email: {
     type: String,
     lowercase: true,
-    required: true,
-    unique: true,
+    required: [true, "El correo es obligatorio"],
+    unique: [true, "Este correo ya está registrado"],
     trim: true,
     maxlength: 50,
     minlength: 10,
