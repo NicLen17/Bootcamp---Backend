@@ -1,5 +1,20 @@
 const CursoModel = require('../models/cursos.schema')
 
+const obtenerTodosLosCursos = async () => {
+  try {
+    const cursos = await CursoModel.find();
+    return {
+      cursos,
+      statusCode: 200,
+    }
+  } catch (error) {
+    return {
+      msg: "Error al traer todos los cursos",
+      statusCode: 500,
+      error
+    };
+  }
+}
 
 const obtenerUnCurso = async (id) => {
   try {
@@ -13,7 +28,7 @@ const obtenerUnCurso = async (id) => {
       msg: "Error al traer un curso",
       statusCode: 500,
       error,
-  };
+    };
   }
 }
 
@@ -29,12 +44,13 @@ const crearCurso = async (body) => {
     return {
       msg: "Error al crear curso",
       statusCode: 500,
-      error,
+      error
   };
   }
 }
 
 module.exports = {
+  obtenerTodosLosCursos,
   obtenerUnCurso,
   crearCurso
 }
