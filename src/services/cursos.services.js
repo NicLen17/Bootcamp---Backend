@@ -55,15 +55,38 @@ const eliminarCurso = async (id) => {
     if (!curso) {
       return { msg: "Curso no encontrado", statusCode: 404 };
     }
-    return { msg: "Curso eliminado", statusCode: 200 };
+    return { msg: "Curso eliminado con exito!", statusCode: 200 };
   } catch (error) {
     return { msg: "Error al eliminar curso", statusCode: 500, error };
   }
 };
 
+const editarCurso = async (id, body) => {
+  try {
+    const curso = await CursoModel.findByIdAndUpdate(id, body, { new: true });
+    if (!curso) {
+      return {
+        msg: "Curso no encontrado",
+        statusCode: 404
+      };
+    }
+    return {
+      msg: "Curso actualizado con exito!",
+      statusCode: 200,
+    };
+  } catch (error) {
+    return {
+      msg: "Error al editar curso",
+      statusCode: 500,
+      error
+    };
+  }
+}
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
   crearCurso,
-  eliminarCurso
+  eliminarCurso,
+  editarCurso
 }
