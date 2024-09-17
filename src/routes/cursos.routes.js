@@ -1,6 +1,6 @@
 const express = require('express')
 const { obtenerTodosLosCursos, obtenerUnCurso, crearCurso, agregarImagenCurso, eliminarCurso, editarCurso } = require('../controllers/cursos.controllers')
-const multer = require('multer')
+const multer = require('../middlewares/multer')
 const router = express.Router()
 
 router.get('/', obtenerTodosLosCursos)

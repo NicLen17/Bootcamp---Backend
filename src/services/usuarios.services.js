@@ -32,7 +32,6 @@ const nuevoUsuario = async(body) => {
      statusCode: 201
    }
   } catch (error) {
-   console.log(error)
     return {
      msg:'Error al crear el usuario',
      statusCode: 500,
