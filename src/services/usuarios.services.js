@@ -6,11 +6,11 @@ const nuevoUsuario = async(body) => {
   try {
  
     const usuarioExiste = await Usuario.findOne({nombre: body.nombre})
-    const emailExiste = await UsuarioModel.findOne({ email: body.email });
+    const emailExiste = await Usuario.findOne({ email: body.email });
  
     if(usuarioExiste){
       return {
-        msg:'usuario no disponible',
+        msg:'El nombre de usuario no esta disponible',
         statusCode: 409
       }
     }
