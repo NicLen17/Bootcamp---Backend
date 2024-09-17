@@ -1,5 +1,5 @@
 const express = require('express')
-const { obtenerTodosLosCursos, obtenerUnCurso, crearCurso, eliminarCurso, editarCurso } = require('./controllers/cursos.controllers')
+const { obtenerTodosLosCursos, obtenerUnCurso, crearCurso, eliminarCurso, editarCurso } = require('../controllers/cursos.controllers')
 const router = express.Router()
 
 router.get('/', obtenerTodosLosCursos)
