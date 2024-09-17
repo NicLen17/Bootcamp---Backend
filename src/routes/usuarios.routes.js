@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { listarUsuarios, obtenerUsuario, crearUsuario } = require('./controllers/usuarios.controllers')
+const { listarUsuarios, obtenerUsuario, crearUsuario } = require('../controllers/usuarios.controllers')
 const { check } = require('express-validator')
 
 router.post('/', [
