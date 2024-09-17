@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator')
 const crearUsuario =  async (req, res) => {
   const errors = validationResult(req)
 
-  if(errors.notEmpty()){
+  if(!errors.isEmpty()){
     return res.status(400).json({msg: errors.array()})
   }
 
@@ -20,7 +20,7 @@ const crearUsuario =  async (req, res) => {
 const inicioSesion = async( req, res) => {
   const errors = validationResult(req)
 
-  if(errors.notEmpty()){
+  if(!errors.isEmpty()){
     return res.status(400).json({msg: errors.array()})
   }
   
