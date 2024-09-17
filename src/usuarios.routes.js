@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { listarUsuarios, obtenerUsuario, crearUsuario } = require('./controllers/usuarios.controllers')
+const { listarUsuarios, obtenerUsuario, crearUsuario, inicioSesion } = require('./controllers/usuarios.controllers')
 const { check } = require('express-validator')
 
 router.post('/', [
@@ -12,7 +12,11 @@ router.post('/', [
     check('password', 'Campo Contraseña vacío').notEmpty(), // faltan mas validaciones en el password
     check('rol', 'El rol debe ser admin o usuario').optional().isIn(['admin', 'usuario'])
 ], crearUsuario)
-
+router.post('/login', [
+    check('nombre', 'Campo Nombre de Usuario vacío').notEmpty(),
+    check('nombre', 'El nombre debe tener entre 4 y 20 caracteres').isLength({ min: 4, max: 20 }),
+    check('password', 'Campo Contraseña vacío').notEmpty(), // faltan mas validaciones en el password
+],inicioSesion)
 router.get('/',listarUsuarios)
 router.get('/:idUsuario', obtenerUsuario)
 
