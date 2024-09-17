@@ -17,7 +17,21 @@ const crearUsuario =  async (req, res) => {
   }
 }
 
+const inicioSesion = async( req, res) => {
+  const errors = validationResult(req)
 
+  if(errors.notEmpty()){
+    return res.status(400).json({msg: errors.array()})
+  }
+  
+  const result = await serviceUsuario.inicioSesion(req.body)
+
+  if(result.statusCode === 200){
+    res.status(200).json({msg: result.msg, rol: result.rol, token: result.token, idUsuario: result.idUsuario} )
+  }else{
+    res.status(400).json({msg: result.msg})
+  }
+}
 
 const listarUsuarios = async (req, res) => {
   const result = await serviceUsuario.listarUsuarios()

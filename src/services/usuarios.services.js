@@ -1,6 +1,7 @@
 const Usuario = require("../models/usuarios.schema")
 const bcrypt = require('bcrypt')
-const { registroUsuario } = require('../helpers/messages')
+const jwt = require('jsonwebtoken')
+
 
 const nuevoUsuario = async(body) => {
   try {
@@ -33,6 +34,40 @@ const nuevoUsuario = async(body) => {
   }
 }
 
+const inicioSesion = async (body) => {
+  const usuarioExiste = await Usuario.findOne({nombre: body.nombreUsuario})
+  if(!usuarioExiste){
+    return{
+      msg:'Usuario y/o contraseña incorrecto.(U)',
+      statusCode: 400
+    }
+  }
+
+  const checkContrasenia = bcrypt.compareSync(body.password, usuarioExiste.password)
+
+  if(!checkContrasenia){
+    return{
+      msg:'Usuario y/o contraseña incorrecto.(C)',
+      statusCode: 400
+    }
+  }
+
+  const payload = {
+    idUsuario: usuarioExiste._id,
+    rol: usuarioExiste.rol,
+  }
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET)
+
+  return{
+    token,
+    rol: usuarioExiste.rol,
+    idUsuario:usuarioExiste._id,
+    msg:'Usuario logueado',
+    statusCode: 200
+  }
+
+}
 
 const listarUsuarios = async() => {
   try {
@@ -69,5 +104,6 @@ const obtenerUsuario = async(idUsuario) => {
 module.exports= {
     listarUsuarios,
     obtenerUsuario,
-    nuevoUsuario
+    nuevoUsuario,
+    inicioSesion
 }
