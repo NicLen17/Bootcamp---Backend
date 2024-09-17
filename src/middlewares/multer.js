@@ -6,7 +6,7 @@ module.exports = multer({
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname)
 
-    if(ext !== '.jpg' || ext !== '.png' || ext !== '.jpeg') {
+    if(ext !== '.jpg' && ext !== '.png' && ext !== '.jpeg') {
       return cb(new Error('Formato incorrecto'), false)
     }
 
