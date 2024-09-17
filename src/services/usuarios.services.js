@@ -1,16 +1,16 @@
 const Usuario = require("../models/usuarios.schema")
 const bcrypt = require('bcrypt')
-
+const jwt = require('jsonwebtoken')
 
 const nuevoUsuario = async(body) => {
   try {
  
     const usuarioExiste = await Usuario.findOne({nombre: body.nombre})
-    const emailExiste = await UsuarioModel.findOne({ email: body.email });
+    const emailExiste = await Usuario.findOne({ email: body.email });
  
     if(usuarioExiste){
       return {
-        msg:'usuario no disponible',
+        msg:'El nombre de usuario no esta disponible',
         statusCode: 409
       }
     }
@@ -26,22 +26,55 @@ const nuevoUsuario = async(body) => {
  
     let salt = bcrypt.genSaltSync();
     usuario.password = bcrypt.hashSync(body.password, salt);
-   await usuario.save()
-   return {
-     msg:'Usuario creado',
-     statusCode: 201
-   }
-  } catch (error) {
-   console.log(error)
+    await usuario.save()
     return {
-     msg:'Error al crear el usuario',
-     statusCode: 500,
-     error
+      msg:'Usuario creado',
+      statusCode: 201
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      msg:'Error al crear el usuario',
+      statusCode: 500,
+      error
     }
   }
 }
 
+const inicioSesion = async (body) => {
+  const usuarioExiste = await Usuario.findOne({nombre: body.nombre})
+  if(!usuarioExiste){
+    return{
+      msg:'Usuario y/o contraseña incorrecto.(U)',
+      statusCode: 400
+    }
+  }
 
+  const checkContrasenia = bcrypt.compareSync(body.password, usuarioExiste.password)
+
+  if(!checkContrasenia){
+    return{
+      msg:'Usuario y/o contraseña incorrecto.(C)',
+      statusCode: 400
+    }
+  }
+
+  const payload = {
+    idUsuario: usuarioExiste._id,
+    rol: usuarioExiste.rol,
+  }
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET)
+
+  return{
+    token,
+    rol: usuarioExiste.rol,
+    idUsuario:usuarioExiste._id,
+    msg:'Usuario logueado',
+    statusCode: 200
+  }
+
+}
 
 const listarUsuarios = async() => {
   try {
@@ -78,5 +111,6 @@ const obtenerUsuario = async(idUsuario) => {
 module.exports= {
     listarUsuarios,
     obtenerUsuario,
-    nuevoUsuario
+    nuevoUsuario,
+    inicioSesion
 }
