@@ -1,3 +1,4 @@
+const cloudinary = require('../helpers/cloudinary');
 const CursoModel = require('../models/cursos.schema')
 
 const obtenerTodosLosCursos = async () => {
@@ -77,6 +78,26 @@ const editarCurso = async (id, body) => {
   } catch (error) {
     return {
       msg: "Error al editar curso",
+      statusCode: 500,
+      error
+    };
+  }
+}
+
+const agregarImagen = async (idCurso, file) => {
+  try {
+    const curso = await CursoModel.findById(idCurso)
+    const imagen = await cloudinary.uploader.upload(file.path)
+    curso.imagen = imagen.secure_url
+    await curso.save()
+
+    return {
+      msg: 'Imagen cargada',
+      statusCode: 200
+    }
+  } catch (error) {
+    return {
+      msg: "Error al cargar la imagen",
       statusCode: 500,
       error
     };
