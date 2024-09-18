@@ -72,5 +72,6 @@ module.exports = {
   crearCurso,
   eliminarCurso,
   editarCurso,
-  agregarImagenCurso 
+  agregarImagenCurso,
+  agregarEliminarCursoCarrito
 }
