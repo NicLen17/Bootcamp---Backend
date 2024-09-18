@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { listarUsuarios, obtenerUsuario, crearUsuario, inicioSesion} = require('../controllers/usuarios.controllers')
-const { check } = require('express-validator')
+const { check } = require('express-validator');
+const auth = require("../middlewares/auth");
 
 router.post('/', [
     check('nombre', 'Campo Nombre de Usuario vacío').notEmpty(),
@@ -17,7 +18,7 @@ router.post('/login', [
     check('nombre', 'El nombre debe tener entre 4 y 20 caracteres').isLength({ min: 4, max: 20 }),
     check('password', 'Campo Contraseña vacío').notEmpty(), // faltan mas validaciones en el password
 ],inicioSesion)
-router.get('/',listarUsuarios)
-router.get('/:idUsuario', obtenerUsuario)
+router.get('/', auth('admin'), listarUsuarios)
+router.get('/:idUsuario', auth('admin'), obtenerUsuario)
 
 module.exports = router;
