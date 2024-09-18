@@ -34,9 +34,9 @@ const CursosSchema = new Schema({
     required: true,
     validate: {
       validator: function(array) {
-        return array.every(tecnologia => tecnologia.length >= 2 && tecnologia.length <= 15);
+        return array.every(tecnologia => tecnologia.length >= 1 && tecnologia.length <= 15);
       },
-      message: 'Cada tecnología debe tener entre 2 y 15 caracteres'
+      message: 'Cada tecnología debe tener entre 1 y 15 caracteres'
     }
   },
   duracion: {
