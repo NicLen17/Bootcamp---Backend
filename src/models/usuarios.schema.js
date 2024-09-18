@@ -30,6 +30,8 @@ const usuarioSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    maxlength: 75,
+    minlength: 6,
   },
   bloqueado: {
     type: Boolean,
