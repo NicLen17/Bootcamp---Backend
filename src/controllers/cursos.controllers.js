@@ -57,6 +57,15 @@ const agregarImagenCurso = async (req, res) => {
     }
 }
 
+const agregarEliminarCursoCarrito = async (req, res) => {
+    const result = await serviciosDeCursos.agregarEliminarCursoDelCarrito(req.params.idCurso, req.idUsuario)
+    if (result.statusCode === 200) {
+        res.status(200).json({ msg: result.msg })
+    } else {
+        res.status(500).json({ msg: result.msg })
+    }
+}
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
