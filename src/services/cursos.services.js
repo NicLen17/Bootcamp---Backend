@@ -110,7 +110,14 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
     const curso = await CursoModel.findById(idCurso)
     const usuario = await Usuario.findById(idUsuario)
 
-    const cursoExiste = usuario.carrito.find((curso) => curso.id === idCurso)
+    if (!curso) {
+      return {
+        msg: "Curso no encontrado",
+        statusCode: 404
+      };
+    }
+    
+    const cursoExiste = usuario.carrito.find((curso) => curso._id.toString() === idCurso)
 
     if(!cursoExiste) {
       usuario.carrito.push(curso)
@@ -121,7 +128,15 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
         statusCode: 200
       }
     } else {
+      const posicionCurso = usuario.carrito.findIndex((curso) => curso._id.toString() === idCurso)
       
+      usuario.carrito.splice(posicionCurso, 1)
+      await usuario.save()
+      
+      return {
+        msg: "Curso eliminado del carrito",
+        statusCode: 200
+      }
     }
   } catch (error) {
     return {
