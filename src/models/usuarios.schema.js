@@ -43,11 +43,11 @@ const usuarioSchema = new mongoose.Schema({
     default: "usuario",
   },
   carrito: {
-    type: [String],
+    type: [],
     default: []
   },
   cursos:{
-    type: [String],
+    type: [],
     default: []
   }
 

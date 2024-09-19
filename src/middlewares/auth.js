@@ -10,6 +10,7 @@ module.exports = (rol) => (req, res, next) => {
 
     const verificarToken = jwt.verify(token, process.env.JWT_SECRET)
     if(verificarToken.rol === rol){
+      req.idUsuario = verificarToken.idUsuario
       next()
     }else{
       return res.status(403).json({msg: 'No tienes el permiso suficiente'})

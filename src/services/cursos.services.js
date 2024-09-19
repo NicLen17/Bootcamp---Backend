@@ -1,5 +1,6 @@
 const cloudinary = require('../helpers/cloudinary');
 const CursoModel = require('../models/cursos.schema')
+const Usuario = require('../models/usuarios.schema')
 
 const obtenerTodosLosCursos = async () => {
   try {
@@ -104,11 +105,54 @@ const agregarImagen = async (idCurso, file) => {
   }
 }
 
+const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
+  try {
+    const curso = await CursoModel.findById(idCurso)
+    const usuario = await Usuario.findById(idUsuario)
+
+    if (!curso) {
+      return {
+        msg: "Curso no encontrado",
+        statusCode: 404
+      };
+    }
+    
+    const cursoExiste = usuario.carrito.find((curso) => curso._id.toString() === idCurso)
+
+    if(!cursoExiste) {
+      usuario.carrito.push(curso)
+      await usuario.save()
+
+      return {
+        msg: "Curso agregado al carrito",
+        statusCode: 200
+      }
+    } else {
+      const posicionCurso = usuario.carrito.findIndex((curso) => curso._id.toString() === idCurso)
+      
+      usuario.carrito.splice(posicionCurso, 1)
+      await usuario.save()
+      
+      return {
+        msg: "Curso eliminado del carrito",
+        statusCode: 200
+      }
+    }
+  } catch (error) {
+    return {
+      msg: "Error al agregar/eliminar del carrito",
+      statusCode: 500,
+      error
+    };
+  }  
+}
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
   crearCurso,
   eliminarCurso,
   editarCurso,
-  agregarImagen
+  agregarImagen,
+  agregarEliminarCursoDelCarrito
 }
