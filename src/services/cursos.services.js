@@ -147,6 +147,33 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
   }  
 }
 
+const cambiarEstadoCurso = async (idCurso) => {
+  try {
+    const curso = await CursoModel.findById(idCurso)
+    curso.habilitado = !curso.habilitado
+
+    await curso.save()
+
+    if(curso.habilitado) {
+      return {
+        msg: 'Curso habilitado',
+        statusCode: 200 
+      }
+    } else {
+      return {
+        msg: 'Curso deshabilitado',
+        statusCode: 200 
+      }
+    }
+  } catch (error) {
+    return {    
+      msg: "Error al cambiar el estado del curso",
+      statusCode: 500,
+      error
+    };
+  }
+  }
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
@@ -154,5 +181,6 @@ module.exports = {
   eliminarCurso,
   editarCurso,
   agregarImagen,
-  agregarEliminarCursoDelCarrito
+  agregarEliminarCursoDelCarrito,
+  cambiarEstadoCurso
 }
