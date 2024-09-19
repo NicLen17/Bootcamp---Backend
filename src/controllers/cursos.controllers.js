@@ -57,11 +57,21 @@ const agregarImagenCurso = async (req, res) => {
     }
 }
 
+const cambiarEstadoCurso = async (req, res) => {
+    const result = await serviciosDeCursos.cambiarEstadoCurso(req.params.idCurso)
+    if (result.statusCode === 200) {
+        res.status(200).json({ msg: result.msg })
+    } else {
+        res.status(500).json({ msg: result.msg })
+    }
+}
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
   crearCurso,
   eliminarCurso,
   editarCurso,
-  agregarImagenCurso 
+  agregarImagenCurso,
+  cambiarEstadoCurso 
 }
