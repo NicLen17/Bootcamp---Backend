@@ -54,7 +54,7 @@ const obtenerUsuario = async (req, res) => {
 }
 
 const cambiarEstadoUsuario = async (req, res) => {
-  const result = await serviceUsuario.cambiarEstadoUsuario(req.params.idUsuario)
+  const result = await serviceUsuario.cambiarEstadoUsuario(req.params.idUsuario, req.idUsuario)
 
   if (result.statusCode === 200) {
       res.status(200).json({ msg: result.msg })

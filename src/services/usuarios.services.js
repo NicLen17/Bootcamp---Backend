@@ -108,24 +108,32 @@ const obtenerUsuario = async(idUsuario) => {
   }
 }
 
-const cambiarEstadoUsuario = async (idUsuario) => {
+const cambiarEstadoUsuario = async (idUsuario, idUsuarioToken) => {
   try {
-    const usuario = await Usuario.findById(idUsuario)
-    usuario.bloqueado = !usuario.bloqueado
-
-    await usuario.save()
-
-    if(usuario.bloqueado) {
-      return {
-        msg: 'Usuario bloqueado',
-        statusCode: 200 
+    if(idUsuario !== idUsuarioToken) {
+      const usuario = await Usuario.findById(idUsuario)
+      usuario.bloqueado = !usuario.bloqueado
+  
+      await usuario.save()
+  
+      if(usuario.bloqueado) {
+        return {
+          msg: 'Usuario bloqueado',
+          statusCode: 200 
+        }
+      } else {
+        return {
+          msg: 'Usuario desbloqueado',
+          statusCode: 200 
+        }
       }
     } else {
       return {
-        msg: 'Usuario desbloqueado',
-        statusCode: 200 
+        msg: 'No puedes alternar el estado de tu propio usuario',
+        statusCode: 500 
       }
     }
+    
   } catch (error) {
     return {    
       msg: "Error al cambiar el estado del usuario",
