@@ -108,9 +108,12 @@ const obtenerUsuario = async(idUsuario) => {
   }
 }
 
+
+
 module.exports= {
     listarUsuarios,
     obtenerUsuario,
     nuevoUsuario,
-    inicioSesion
+    inicioSesion,
+    editarUsuario
 }
