@@ -108,9 +108,22 @@ const obtenerUsuario = async(idUsuario) => {
   }
 }
 
+const eliminarUsuario = async (id) => {
+  try {
+    const usuario = await Usuario.findByIdAndDelete(id);
+    if (!usuario) {
+      return { msg: "Usuario no encontrado", statusCode: 404 };
+    }
+    return { msg: "Usuario eliminado con exito!", statusCode: 200 };
+  } catch (error) {
+    return { msg: "Error al eliminar el usuario", statusCode: 500, error };
+  }
+};
+
 module.exports= {
     listarUsuarios,
     obtenerUsuario,
     nuevoUsuario,
-    inicioSesion
+    inicioSesion,
+    eliminarUsuario
 }
