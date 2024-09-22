@@ -20,5 +20,6 @@ router.post('/login', [
 ],inicioSesion)
 router.get('/', auth('admin'), listarUsuarios)
 router.get('/:idUsuario', auth('admin'), obtenerUsuario)
+router.delete('/:idUsuario', auth('admin'), eliminarUsuario)
 
 module.exports = router;
