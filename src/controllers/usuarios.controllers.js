@@ -50,12 +50,23 @@ const obtenerUsuario = async (req, res) => {
     }else{
       res.status(500).json({msg: result.msg})
     }
-  
 }
+
+const obtenerCarrito = async (req, res) => {
+  const result = await serviceUsuario.obtenerCarrito(req.idUsuario)
+
+  if(result.statusCode === 200){
+      res.status(200).json(result.cursos)
+  }else{
+    res.status(500).json({msg: result.msg})
+  }
+}
+
 
 module.exports = {
     listarUsuarios,
     obtenerUsuario,
     crearUsuario,
-    inicioSesion
+    inicioSesion,
+    obtenerCarrito
 }
