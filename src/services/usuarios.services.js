@@ -108,13 +108,27 @@ const obtenerUsuario = async(idUsuario) => {
   }
 }
 
-const eliminarUsuario = async (id) => {
+const eliminarUsuario = async (id, idUsuarioToken) => {
   try {
-    const usuario = await Usuario.findByIdAndDelete(id);
-    if (!usuario) {
-      return { msg: "Usuario no encontrado", statusCode: 404 };
+    if(id !== idUsuarioToken){
+      const usuario = await Usuario.findByIdAndDelete(id);
+      if (!usuario) {
+        return { 
+          msg: "Usuario no encontrado",
+          statusCode: 404
+        };
+      }
+      return { 
+        msg: "Usuario eliminado con exito!",
+        statusCode: 200 
+      };
+    } else {
+      return {
+        msg:'No puedes eliminar tu propio usuario',
+        statusCode: 500,
+       }
     }
-    return { msg: "Usuario eliminado con exito!", statusCode: 200 };
+    
   } catch (error) {
     return { msg: "Error al eliminar el usuario", statusCode: 500, error };
   }
