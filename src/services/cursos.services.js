@@ -18,6 +18,22 @@ const obtenerTodosLosCursos = async () => {
   }
 }
 
+const obtenerTodosLosCursosHabilitados = async () => {
+  try {
+    const cursos = await CursoModel.find({habilitado: true});
+    return {
+      cursos,
+      statusCode: 200,
+    }
+  } catch (error) {
+    return {
+      msg: "Error al traer todos los cursos habilitados",
+      statusCode: 500,
+      error
+    };
+  }
+}
+
 const obtenerUnCurso = async (id) => {
   try {
     const curso = await CursoModel.findById(id);
@@ -182,5 +198,6 @@ module.exports = {
   editarCurso,
   agregarImagen,
   agregarEliminarCursoDelCarrito,
-  cambiarEstadoCurso
+  cambiarEstadoCurso,
+  obtenerTodosLosCursosHabilitados
 }
