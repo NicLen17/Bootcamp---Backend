@@ -19,7 +19,7 @@ router.post('/login', [
     check('password', 'Campo Contraseña vacío').notEmpty(), // faltan mas validaciones en el password
 ],inicioSesion)
 router.get('/', auth('admin'), listarUsuarios)
+router.get('/carrito', auth('usuario'), obtenerCarrito)
 router.get('/:idUsuario', auth('admin'), obtenerUsuario)
-router.get("/carrito", auth('usuario'), obtenerCarrito)
 
 module.exports = router;

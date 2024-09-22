@@ -108,9 +108,26 @@ const obtenerUsuario = async(idUsuario) => {
   }
 }
 
+const obtenerCarrito = async (idUsuario) => {
+  try {
+    const usuario = await Usuario.findById(idUsuario)
+    return{
+      cursos: usuario.carrito,
+      statusCode: 200
+    }
+  } catch (error) {
+    return {
+      msg:'Error al obtener el carrito del usuario',
+      statusCode: 500,
+      error
+     }
+  }
+}
+
 module.exports= {
     listarUsuarios,
     obtenerUsuario,
     nuevoUsuario,
-    inicioSesion
+    inicioSesion,
+    obtenerCarrito
 }
