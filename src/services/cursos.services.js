@@ -172,7 +172,7 @@ const cambiarEstadoCurso = async (idCurso) => {
       error
     };
   }
-  }
+}
 
 module.exports = {
   obtenerTodosLosCursos,
