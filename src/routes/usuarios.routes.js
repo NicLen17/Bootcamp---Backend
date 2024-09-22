@@ -20,5 +20,6 @@ router.post('/login', [
 ],inicioSesion)
 router.get('/', auth('admin'), listarUsuarios)
 router.get('/:idUsuario', auth('admin'), obtenerUsuario)
+router.put('/estado/:idUsuario', auth('admin'), cambiarEstadoUsuario)
 
 module.exports = router;
