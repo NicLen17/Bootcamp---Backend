@@ -107,7 +107,6 @@ const obtenerUsuario = async(idUsuario) => {
      }
   }
 }
-
 const cambiarEstadoUsuario = async (idUsuario, idUsuarioToken) => {
   try {
     if(idUsuario !== idUsuarioToken) {
@@ -163,6 +162,31 @@ const editarUsuario = async (id, body) => {
     };
   }
 }
+const eliminarUsuario = async (id, idUsuarioToken) => {
+  try {
+    if(id !== idUsuarioToken){
+      const usuario = await Usuario.findByIdAndDelete(id);
+      if (!usuario) {
+        return { 
+          msg: "Usuario no encontrado",
+          statusCode: 404
+        };
+      }
+      return { 
+        msg: "Usuario eliminado con exito!",
+        statusCode: 200 
+      };
+    } else {
+      return {
+        msg:'No puedes eliminar tu propio usuario',
+        statusCode: 500,
+       }
+    }
+    
+  } catch (error) {
+    return { msg: "Error al eliminar el usuario", statusCode: 500, error };
+  }
+};
 
 module.exports= {
     listarUsuarios,
@@ -170,5 +194,6 @@ module.exports= {
     nuevoUsuario,
     inicioSesion,
     cambiarEstadoUsuario,
-    editarUsuario
+    editarUsuario,
+    eliminarUsuario
 }
