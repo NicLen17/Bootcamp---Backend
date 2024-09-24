@@ -40,7 +40,7 @@ const listarUsuarios = async (req, res) => {
   }else{
    res.status(500).json({msg: result.msg})
   }
-  }
+}
 
 const obtenerUsuario = async (req, res) => {
     const result = await serviceUsuario.obtenerUsuario(req.params.idUsuario)
@@ -50,12 +50,23 @@ const obtenerUsuario = async (req, res) => {
     }else{
       res.status(500).json({msg: result.msg})
     }
-  
+
+}
+
+const cambiarEstadoUsuario = async (req, res) => {
+  const result = await serviceUsuario.cambiarEstadoUsuario(req.params.idUsuario, req.idUsuario)
+
+  if (result.statusCode === 200) {
+      res.status(200).json({ msg: result.msg })
+  } else {
+      res.status(500).json({ msg: result.msg })
+  }
 }
 
 module.exports = {
     listarUsuarios,
     obtenerUsuario,
     crearUsuario,
-    inicioSesion
+    inicioSesion,
+    cambiarEstadoUsuario
 }
