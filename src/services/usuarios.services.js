@@ -142,11 +142,33 @@ const cambiarEstadoUsuario = async (idUsuario, idUsuarioToken) => {
     };
   }
 }
+const editarUsuario = async (id, body) => {
+  try {
+    const usuario = await Usuario.findByIdAndUpdate(id, body, { new: true });
+    if (!usuario) {
+      return {
+        msg: "Usuario no encontrado",
+        statusCode: 404
+      };
+    }
+    return {
+      msg: "Usuario actualizado con exito!",
+      statusCode: 200,
+    };
+  } catch (error) {
+    return {
+      msg: "Error al editar el usuario",
+      statusCode: 500,
+      error
+    };
+  }
+}
 
 module.exports= {
     listarUsuarios,
     obtenerUsuario,
     nuevoUsuario,
     inicioSesion,
-    cambiarEstadoUsuario
+    cambiarEstadoUsuario,
+    editarUsuario
 }
