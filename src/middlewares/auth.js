@@ -9,6 +9,7 @@ module.exports = (rol) => (req, res, next) => {
     }
 
     const verificarToken = jwt.verify(token, process.env.JWT_SECRET)
+    console.log(verificarToken.rol)
     if(verificarToken.rol === rol){
       req.idUsuario = verificarToken.idUsuario
       next()

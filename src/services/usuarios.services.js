@@ -188,6 +188,22 @@ const eliminarUsuario = async (id, idUsuarioToken) => {
   }
 };
 
+const obtenerCarrito = async (idUsuario) => {
+  try {
+    const usuario = await Usuario.findById(idUsuario)
+    return{
+      cursos: usuario.carrito,
+      statusCode: 200
+    }
+  } catch (error) {
+    return {
+      msg:'Error al obtener el carrito del usuario',
+      statusCode: 500,
+      error
+     }
+  }
+}
+
 module.exports= {
     listarUsuarios,
     obtenerUsuario,
@@ -195,5 +211,6 @@ module.exports= {
     inicioSesion,
     cambiarEstadoUsuario,
     editarUsuario,
-    eliminarUsuario
+    eliminarUsuario,
+    obtenerCarrito
 }
