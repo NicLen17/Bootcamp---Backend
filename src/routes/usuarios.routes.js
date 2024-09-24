@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { listarUsuarios, obtenerUsuario, crearUsuario, inicioSesion, cambiarEstadoUsuario, editarUsuario, eliminarUsuario } = require('../controllers/usuarios.controllers')
+const { listarUsuarios, obtenerUsuario, crearUsuario, inicioSesion, cambiarEstadoUsuario, editarUsuario, eliminarUsuario, obtenerCarrito } = require('../controllers/usuarios.controllers')
 const { check } = require('express-validator');
 const auth = require("../middlewares/auth");
 
@@ -19,6 +19,7 @@ router.post('/login', [
     check('password', 'Campo Contraseña vacío').notEmpty(), // faltan mas validaciones en el password
 ],inicioSesion)
 router.get('/', auth('admin'), listarUsuarios)
+router.get('/carrito', auth('usuario'), obtenerCarrito)
 router.get('/:idUsuario', auth('admin'), obtenerUsuario)
 router.put('/estado/:idUsuario', auth('admin'), cambiarEstadoUsuario)
 router.put('/:idUsuario', auth('admin'), editarUsuario)

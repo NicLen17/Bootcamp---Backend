@@ -83,6 +83,17 @@ const eliminarUsuario = async (req, res) => {
   }
 }
 
+const obtenerCarrito = async (req, res) => {
+  const result = await serviceUsuario.obtenerCarrito(req.idUsuario)
+
+  if(result.statusCode === 200){
+      res.status(200).json(result.cursos)
+  }else{
+    res.status(500).json({msg: result.msg})
+  }
+}
+
+
 module.exports = {
     listarUsuarios,
     obtenerUsuario,
@@ -90,5 +101,6 @@ module.exports = {
     inicioSesion,
     cambiarEstadoUsuario,
     editarUsuario,
-    eliminarUsuario
+    eliminarUsuario,
+    obtenerCarrito
 }
