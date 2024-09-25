@@ -1,6 +1,7 @@
 const Usuario = require("../models/usuarios.schema")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { registroUsuario, bajaUsuario } = require("../helpers/mensajes")
 
 const nuevoUsuario = async(body) => {
   try {
@@ -26,6 +27,9 @@ const nuevoUsuario = async(body) => {
  
     let salt = bcrypt.genSaltSync();
     usuario.password = bcrypt.hashSync(body.password, salt);
+
+    await registroUsuario(body.nombre, body.email); //Llamado a nodemailer
+    
     await usuario.save()
     return {
       msg:'Usuario creado',
@@ -162,10 +166,11 @@ const editarUsuario = async (id, body) => {
     };
   }
 }
-const eliminarUsuario = async (id, idUsuarioToken) => {
+const eliminarUsuario = async (id, idUsuarioToken, body) => {
   try {
     if(id !== idUsuarioToken){
       const usuario = await Usuario.findByIdAndDelete(id);
+      await bajaUsuario(body.nombre, body.email); //Llamado a nodemailer
       if (!usuario) {
         return { 
           msg: "Usuario no encontrado",
