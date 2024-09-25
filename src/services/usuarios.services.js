@@ -1,6 +1,7 @@
 const Usuario = require("../models/usuarios.schema")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { registroUsuario, pagoProductosUsuario, recuperoContraseniaUsuario } = require("../helpers/mensajes")
 
 const nuevoUsuario = async(body) => {
   try {
@@ -26,6 +27,9 @@ const nuevoUsuario = async(body) => {
  
     let salt = bcrypt.genSaltSync();
     usuario.password = bcrypt.hashSync(body.password, salt);
+
+    await registroUsuario(body.nombre, body.email); //Llamado a nodemailer
+    
     await usuario.save()
     return {
       msg:'Usuario creado',
