@@ -2,7 +2,7 @@ const transporter = require('../helpers/nodemailer')
 
 const registroUsuario = async (nombre, emailUsuario) => {
     const info = await transporter.sendMail({
-        from: `Bienvenido a nuestra pagina!" <${process.env.GMAIL_USER}>`, 
+        from: `Bienvenido a nuestra academia!" <${process.env.GMAIL_USER}>`, 
         to: `${emailUsuario}`, 
         subject: "Comienza a aprender con nosotros!",
         html: `<div style="font-family: Arial, sans-serif; background-color: #2e293a">
@@ -24,10 +24,10 @@ const registroUsuario = async (nombre, emailUsuario) => {
             </div>
             
             <div style="text-align: center; padding: 20px;">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZPr_81NRDKYQaQ5Dmq_jMmhAHInvHIbsv1A&s" alt="Team Bootcamp" style="max-width: 250px; height: 200px;">
-                <img src="https://codersfree.nyc3.cdn.digitaloceanspaces.com/posts/que-es-javascript-descubre-sus-5-principales-usos.jpg" alt="Team Bootcamp" style="max-width: 250px; height: 200px;">
-                <img src="https://images.ctfassets.net/aq13lwl6616q/7cS8gBoWulxkWNWEm0FspJ/c7eb42dd82e27279307f8b9fc9b136fa/nodejs_cover_photo_smaller_size.png" alt="Team Bootcamp" style="max-width: 250px; height: 200px;">
-                <img src="https://wellcreator.com/blog/wp-content/uploads/2022/02/html-css-750x375.jpg" alt="Team Bootcamp" style="max-width: 250px; height: 200px;">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZPr_81NRDKYQaQ5Dmq_jMmhAHInvHIbsv1A&s" alt="Team Bootcamp" style="max-width: 250px; height: 200px; object-fit: cover">
+                <img src="https://codersfree.nyc3.cdn.digitaloceanspaces.com/posts/que-es-javascript-descubre-sus-5-principales-usos.jpg" alt="Team Bootcamp" style="max-width: 250px; height: 200px; object-fit: cover">
+                <img src="https://images.ctfassets.net/aq13lwl6616q/7cS8gBoWulxkWNWEm0FspJ/c7eb42dd82e27279307f8b9fc9b136fa/nodejs_cover_photo_smaller_size.png" alt="Team Bootcamp" style="max-width: 250px; height: 200px; object-fit: cover">
+                <img src="https://wellcreator.com/blog/wp-content/uploads/2022/02/html-css-750x375.jpg" alt="Team Bootcamp" style="max-width: 250px; height: 200px; object-fit: cover">
             </div>
             
             <div style="text-align: center; padding: 20px; font-size: 22px;  color: #fff" >
@@ -105,8 +105,36 @@ const recuperoContraseniaUsuario = async (nombre, emailUsuario) => {
     });
 }
 
+const bajaUsuario = async (nombre, emailUsuario) => {
+    const info = await transporter.sendMail({
+        from: `Baja de cuenta" <${process.env.GMAIL_USER}>`, 
+        to: `${emailUsuario}`, 
+        subject: "Cuenta dada de baja!",
+        html: `<div style="font-family: Arial, sans-serif; background-color: #2e293a">
+            
+            <div style="text-align: center; padding: 20px; background-color: red;">
+                <h1 style="color: #fff; font-size: 36px; padding: 10px;">¡Adios, ${nombre}!</h1>
+            </div>
+            
+            <div style="text-align: center; padding: 20px; font-size: 22px; color: #fff" >
+                <p>Estamos tristes de verte partir de nuestro bootcamp. Esperamos que hayas encontrado todo lo necesario para comenzar a aprender y crecer en tu carrera profesional.</p>
+            </div>
+            
+            <div style="text-align: center; padding: 20px; ">
+                <img src="https://cdn-icons-png.flaticon.com/512/5821/5821932.png" alt="Adios" style="max-width: 100%; height: auto;">
+            </div>
+
+            <div style="text-align: center; padding: 20px; font-size: 22px;  color: #fff" >
+                <p style="font-size: 16px; color: #777;">¡Te deamos suerte!<br>El equipo de Bootcamp</p>
+            </div>
+            </div>
+    `, // html body
+    });
+}
+
 module.exports = {
     registroUsuario,
     pagoProductosUsuario,
-    recuperoContraseniaUsuario
+    recuperoContraseniaUsuario,
+    bajaUsuario
 }
