@@ -10,6 +10,15 @@ const obtenerTodosLosCursos = async (req, res) => {
     }
 }
 
+const obtenerTodosLosCursosHabilitados = async (req, res) => {
+    const result = await serviciosDeCursos.obtenerTodosLosCursosHabilitados()
+    if (result.statusCode === 200){
+        res.status(200).json(result.cursos)
+    } else {
+        res.status(500).json({msg: result.msg})
+    }
+}
+
 const obtenerUnCurso = async (req, res) => {
     const result = await serviciosDeCursos.obtenerUnCurso(req.params.idCurso)
     if (result.statusCode === 200){
@@ -84,5 +93,6 @@ module.exports = {
   editarCurso,
   agregarImagenCurso,
   agregarEliminarCursoCarrito,
-  cambiarEstadoCurso 
+  cambiarEstadoCurso,
+  obtenerTodosLosCursosHabilitados
 }
