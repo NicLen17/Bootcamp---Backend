@@ -1,6 +1,8 @@
 const cloudinary = require('../helpers/cloudinary');
+const { configHeaderWhatsApp } = require('../helpers/meta');
 const CursoModel = require('../models/cursos.schema')
 const Usuario = require('../models/usuarios.schema')
+const axios = require('axios')
 
 const obtenerTodosLosCursos = async () => {
   try {
@@ -190,6 +192,34 @@ const cambiarEstadoCurso = async (idCurso) => {
   }
 }
 
+const mensajeWhatsApp = async() => {
+  console.log(process.env.META_MY_CEL)
+  const result = await axios.post(`https://graph.facebook.com/v20.0/${process.env.META_ID_CEL}/messages`, {
+    messaging_product: 'whatsapp',
+    to: `${process.env.META_MY_CEL}`,
+    type: 'template',
+    template:{
+      name:'hello_world',
+      language: {
+        code: 'en_US'
+      }
+    }
+  },
+  configHeaderWhatsApp
+)
+if(result.status === 200){
+  return {
+    msg: 'Mensaje enviado!',
+    statusCode: 200
+  }
+}
+if(result.status === 400){
+  return {
+    msg: 'Erro al enviar el mensaje!',
+    statusCode: 500
+  }
+}}
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
@@ -199,5 +229,6 @@ module.exports = {
   agregarImagen,
   agregarEliminarCursoDelCarrito,
   cambiarEstadoCurso,
-  obtenerTodosLosCursosHabilitados
+  obtenerTodosLosCursosHabilitados,
+  mensajeWhatsApp
 }
