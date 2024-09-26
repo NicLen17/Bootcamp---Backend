@@ -215,7 +215,7 @@ if(result.status === 200){
 }
 if(result.status === 400){
   return {
-    msg: 'Erro al enviar el mensaje!',
+    msg: 'Error al enviar el mensaje!',
     statusCode: 500
   }
 }}
