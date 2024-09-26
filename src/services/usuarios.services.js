@@ -209,6 +209,39 @@ const obtenerCarrito = async (idUsuario) => {
   }
 }
 
+const comprar = async (idUsuario) => {
+  try {
+    const usuario = await Usuario.findById(idUsuario)
+
+    if (!usuario) {
+      return {
+        msg: "Usuario no encontrado",
+        statusCode: 404
+      };
+    }
+    if (!usuario.carrito || usuario.carrito.length === 0) {
+      return {
+        msg: "El carrito está vacío, no hay cursos para comprar",
+        statusCode: 400
+      };
+    }
+    
+    usuario.cursos = usuario.cursos.concat(usuario.carrito);
+    usuario.carrito = [];
+    await usuario.save();
+    
+    return { 
+      msg: "Operacion exitosa",
+      statusCode: 200 
+    };
+  } catch (error) {
+    return {
+      msg:'Error. No pudo realizarce la operacion',
+      statusCode: 500,
+      error
+     }
+  }
+}
 
 
 module.exports= {
@@ -219,5 +252,6 @@ module.exports= {
     cambiarEstadoUsuario,
     editarUsuario,
     eliminarUsuario,
-    obtenerCarrito
+    obtenerCarrito,
+    comprar
 }
