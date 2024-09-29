@@ -134,17 +134,18 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
         statusCode: 404
       };
     }
-
-    if (!curso.habilitado) {
-      return {
-        msg: "Curso deshabilitado",
-        statusCode: 500
-      };
-    }
     
     const cursoExiste = usuario.carrito.find((curso) => curso === idCurso)
 
     if(!cursoExiste) {
+
+      if (!curso.habilitado) {
+        return {
+          msg: "Curso deshabilitado",
+          statusCode: 500
+        };
+      }
+      
       usuario.carrito.push(curso.id)
       await usuario.save()
 

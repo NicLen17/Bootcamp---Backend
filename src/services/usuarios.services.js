@@ -196,6 +196,14 @@ const eliminarUsuario = async (id, idUsuarioToken, body) => {
 const obtenerCarrito = async (idUsuario) => {
   try {
     const usuario = await Usuario.findById(idUsuario)
+    
+    if (!usuario) {
+      return {
+        msg: "Usuario no encontrado",
+        statusCode: 404
+      };
+    }
+    
     return{
       cursos: usuario.carrito,
       statusCode: 200
