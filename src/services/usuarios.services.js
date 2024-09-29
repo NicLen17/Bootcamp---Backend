@@ -36,7 +36,6 @@ const nuevoUsuario = async(body) => {
       statusCode: 201
     }
   } catch (error) {
-    console.log(error)
     return {
       msg:'Error al crear el usuario',
       statusCode: 500,
@@ -115,21 +114,29 @@ const cambiarEstadoUsuario = async (idUsuario, idUsuarioToken) => {
   try {
     if(idUsuario !== idUsuarioToken) {
       const usuario = await Usuario.findById(idUsuario)
-      usuario.bloqueado = !usuario.bloqueado
+      if(usuario.rol !== 'admin') {
+        usuario.bloqueado = !usuario.bloqueado
   
-      await usuario.save()
-  
-      if(usuario.bloqueado) {
-        return {
-          msg: 'Usuario bloqueado',
-          statusCode: 200 
+        await usuario.save()
+    
+        if(usuario.bloqueado) {
+          return {
+            msg: 'Usuario bloqueado',
+            statusCode: 200 
+          }
+        } else {
+          return {
+            msg: 'Usuario desbloqueado',
+            statusCode: 200 
+          }
         }
       } else {
         return {
-          msg: 'Usuario desbloqueado',
-          statusCode: 200 
+          msg: 'No puedes alternar el estado de un administrador',
+          statusCode: 500 
         }
       }
+      
     } else {
       return {
         msg: 'No puedes alternar el estado de tu propio usuario',
@@ -145,6 +152,7 @@ const cambiarEstadoUsuario = async (idUsuario, idUsuarioToken) => {
     };
   }
 }
+
 const editarUsuario = async (id, body) => {
   try {
     const usuario = await Usuario.findByIdAndUpdate(id, body, { new: true });
@@ -154,6 +162,14 @@ const editarUsuario = async (id, body) => {
         statusCode: 404
       };
     }
+
+    if(Object.keys(body).length === 0) {
+      return {
+        msg: "Error al editar el usuario, el BODY está vacío",
+        statusCode: 500,
+      };
+    }
+    
     return {
       msg: "Usuario actualizado con exito!",
       statusCode: 200,
@@ -166,6 +182,7 @@ const editarUsuario = async (id, body) => {
     };
   }
 }
+
 const eliminarUsuario = async (id, idUsuarioToken, body) => {
   try {
     if(id !== idUsuarioToken){
