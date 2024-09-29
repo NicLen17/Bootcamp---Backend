@@ -135,10 +135,10 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
       };
     }
     
-    const cursoExiste = usuario.carrito.find((curso) => curso._id.toString() === idCurso)
+    const cursoExiste = usuario.carrito.find((curso) => curso === idCurso)
 
     if(!cursoExiste) {
-      usuario.carrito.push(curso)
+      usuario.carrito.push(curso.id)
       await usuario.save()
 
       return {
@@ -146,8 +146,8 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
         statusCode: 200
       }
     } else {
-      const posicionCurso = usuario.carrito.findIndex((curso) => curso._id.toString() === idCurso)
-      
+      const posicionCurso = usuario.carrito.findIndex((curso) => curso === idCurso)
+      console.log(posicionCurso)
       usuario.carrito.splice(posicionCurso, 1)
       await usuario.save()
       
