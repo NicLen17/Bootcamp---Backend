@@ -203,7 +203,7 @@ const obtenerCarrito = async (idUsuario) => {
         statusCode: 404
       };
     }
-    
+
     return{
       cursos: usuario.carrito,
       statusCode: 200
@@ -227,6 +227,7 @@ const comprar = async (idUsuario) => {
         statusCode: 404
       };
     }
+    
     if (!usuario.carrito || usuario.carrito.length === 0) {
       return {
         msg: "El carrito está vacío, no hay cursos para comprar",
