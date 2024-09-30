@@ -303,5 +303,6 @@ module.exports= {
     editarUsuario,
     eliminarUsuario,
     obtenerCarrito,
-    comprar
+    comprar,
+    obtenerCursosUsuario
 }
