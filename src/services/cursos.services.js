@@ -135,19 +135,39 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
       };
     }
     
-    const cursoExiste = usuario.carrito.find((curso) => curso._id.toString() === idCurso)
+    const cursoExiste = usuario.carrito.find((curso) => curso.id === idCurso)
+    const cursoComprado = usuario.cursos.find((curso) => curso.id === idCurso)
 
     if(!cursoExiste) {
-      usuario.carrito.push(curso)
-      await usuario.save()
-
-      return {
-        msg: "Curso agregado al carrito",
-        statusCode: 200
+      if(!cursoComprado){
+        if (!curso.habilitado) {
+          return {
+            msg: "Curso deshabilitado",
+            statusCode: 500
+          };
+        }
+        
+        usuario.carrito.push({
+          id: curso.id,
+          nombre: curso.nombre,
+          precio: curso.precio
+        })
+        await usuario.save()
+  
+        return {
+          msg: "Curso agregado al carrito",
+          statusCode: 200
+        }
+      } else {
+        return {
+          msg: "Ya tienes este curso",
+          statusCode: 500
+        };
       }
-    } else {
-      const posicionCurso = usuario.carrito.findIndex((curso) => curso._id.toString() === idCurso)
       
+    } else {
+      const posicionCurso = usuario.carrito.findIndex((curso) => curso.id === idCurso)
+      console.log(posicionCurso)
       usuario.carrito.splice(posicionCurso, 1)
       await usuario.save()
       
