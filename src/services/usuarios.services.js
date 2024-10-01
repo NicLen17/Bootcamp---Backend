@@ -316,6 +316,34 @@ const obtenerCursosUsuario = async (idUsuario) => {
   }
 }
 
+const mensajeWhatsApp = async() => {
+  console.log(process.env.META_MY_CEL)
+  const result = await axios.post(`https://graph.facebook.com/v20.0/${process.env.META_ID_CEL}/messages`, {
+    messaging_product: 'whatsapp',
+    to: `${process.env.META_MY_CEL}`,
+    type: 'template',
+    template:{
+      name:'hello_world',
+      language: {
+        code: 'en_US'
+      }
+    }
+  },
+  configHeaderWhatsApp
+  )
+  if(result.status === 200){
+    return {
+      msg: 'Mensaje enviado!',
+      statusCode: 200
+    }
+  }
+  if(result.status === 400){
+    return {
+      msg: 'Error al enviar el mensaje!',
+      statusCode: 500
+    }
+  }
+}
 
 module.exports= {
     listarUsuarios,
@@ -328,4 +356,5 @@ module.exports= {
     obtenerCarrito,
     comprar,
     obtenerCursosUsuario,
+    mensajeWhatsApp
 }

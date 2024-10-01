@@ -85,15 +85,6 @@ const cambiarEstadoCurso = async (req, res) => {
     }
 }
 
-const whatsAppApi = async (req, res) => {
-    const result = await serviciosDeCursos.mensajeWhatsApp()
-    if (result.statusCode === 200) {
-        res.status(200).json({ msg: result.msg })
-    } else {
-        res.status(500).json({ msg: result.msg })
-    }
-}
-
 module.exports = {
     obtenerTodosLosCursos,
     obtenerUnCurso,
@@ -104,5 +95,4 @@ module.exports = {
     agregarEliminarCursoCarrito,
     cambiarEstadoCurso,
     obtenerTodosLosCursosHabilitados,
-    whatsAppApi
 }

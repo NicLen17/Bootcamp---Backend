@@ -116,6 +116,15 @@ const obtenerCursosUsuario = async (req, res) => {
   }
 }
 
+const whatsAppApi = async (req, res) => {
+  const result = await serviceUsuario.mensajeWhatsApp()
+  if (result.statusCode === 200) {
+      res.status(200).json({ msg: result.msg })
+  } else {
+      res.status(500).json({ msg: result.msg })
+  }
+}
+
 module.exports = {
     listarUsuarios,
     obtenerUsuario,
@@ -126,5 +135,6 @@ module.exports = {
     eliminarUsuario,
     obtenerCarrito,
     comprar,
-    obtenerCursosUsuario
+    obtenerCursosUsuario,
+    whatsAppApi
 }

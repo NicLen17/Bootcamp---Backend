@@ -70,7 +70,7 @@ const CursosSchema = new Schema({
   },
   habilitado: {
     type: Boolean,
-    default: true
+    default: true,
   },
 })
 
