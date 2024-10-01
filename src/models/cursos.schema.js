@@ -40,11 +40,9 @@ const CursosSchema = new Schema({
     }
   },
   duracion: {
-    duracion: {
-      type: Number,
-      min: [1, "La duración mínima del curso es 1 hora"],
-      max: [1000, "La duración máxima del curso es 1000 horas"]
-    },
+    type: Number,
+    min: [1, "La duración mínima del curso es 1 hora"],
+    max: [1000, "La duración máxima del curso es 1000 horas"]
   },
   precio: {
     type: Number,

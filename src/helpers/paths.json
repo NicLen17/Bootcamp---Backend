@@ -1,55 +1,37 @@
 {
-  "/pets": {
-    "get": {
-      "summary": "Obtiene todas las mascotas",
-      "tags": ["Pets"],
-      "responses": {
-        "200": {
-          "description": "Lista de mascotas",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
+  "/api/cursos": {
+    "post": {
+      "tags": ["Cursos"],
+      "summary": "Crear un nuevo curso",
+      "description": "Crea un curso nuevo. Solo los administradores pueden hacerlo.",
+      "operationId": "crearCurso",
+      "security": [{ "bearerAuth": [] }],
+      "requestBody": {
+        "description": "Datos del nuevo curso",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Cursos" }
           }
-        },
-        "500": {
-          "description": "Error del servidor"
         }
-      }
-    }
-  },
-  "/pets/{petId}": {
-    "get": {
-      "summary": "Obtiene una mascota por su ID",
-      "tags": ["Pets"],
+      },
       "parameters": [
         {
-          "name": "petId",
-          "in": "path",
+          "name": "auth",
+          "in": "header",
           "required": true,
+          "description": "Token de autenticación",
           "schema": {
-            "type": "integer"
+            "type": "string"
           }
         }
       ],
       "responses": {
-        "200": {
-          "description": "Detalles de la mascota",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            }
-          }
+        "201": {
+          "description": "Curso creado con éxito"
         },
-        "404": {
-          "description": "Mascota no encontrada"
+        "500": {
+          "description": "Error al crear el usuario"
         }
       }
     }

@@ -46,16 +46,11 @@
           "example": ["Node.js", "MongoDB"]
         },
         "duracion": {
-          "type": "object",
-          "properties": {
-            "duracion": {
-              "type": "number",
-              "minimum": 1,
-              "maximum": 1000,
-              "description": "Duración del curso en horas",
-              "example": 10
-            }
-          }
+          "type": "number",
+          "minimum": 1,
+          "maximum": 1000,
+          "description": "Duración del curso en horas",
+          "example": 10
         },
         "precio": {
           "type": "number",

@@ -16,7 +16,8 @@ const swaggerSpec = {
         url: 'http://localhost:8080'
       }
     ],
-    components: components
+    components: components,
+    paths: paths
   },
   apis: [`${path.join(__dirname, '../routes/*')}`]
 }
