@@ -104,6 +104,15 @@ const puntuarCurso = async (req, res) => {
     }
 }
 
+const obtenerTodasLasValoraciones = async (req, res) => {
+    const result = await serviciosDeCursos.obtenerTodasLasValoraciones(req.params.idCurso)
+    if (result.statusCode === 200) {
+        res.status(200).json(result.valoraciones)
+    } else {
+        res.status(500).json({ msg: result.msg })
+    }
+}
+
 module.exports = {
     obtenerTodosLosCursos,
     obtenerUnCurso,
@@ -115,5 +124,6 @@ module.exports = {
     cambiarEstadoCurso,
     obtenerTodosLosCursosHabilitados,
     whatsAppApi,
-    puntuarCurso
+    puntuarCurso,
+    obtenerTodasLasValoraciones
 }

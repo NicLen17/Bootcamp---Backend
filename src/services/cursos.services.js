@@ -325,5 +325,6 @@ module.exports = {
   cambiarEstadoCurso,
   obtenerTodosLosCursosHabilitados,
   mensajeWhatsApp,
-  puntuarCurso
+  puntuarCurso,
+  obtenerTodasLasValoraciones
 }
