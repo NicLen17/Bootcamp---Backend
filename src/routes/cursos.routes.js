@@ -1,5 +1,5 @@
 const express = require('express')
-const { obtenerTodosLosCursos, obtenerUnCurso, crearCurso, agregarImagenCurso, eliminarCurso, editarCurso, agregarEliminarCursoCarrito, cambiarEstadoCurso, obtenerTodosLosCursosHabilitados, whatsAppApi, puntuarCurso } = require('../controllers/cursos.controllers')
+const { obtenerTodosLosCursos, obtenerUnCurso, crearCurso, agregarImagenCurso, eliminarCurso, editarCurso, agregarEliminarCursoCarrito, cambiarEstadoCurso, obtenerTodosLosCursosHabilitados, whatsAppApi, puntuarCurso, obtenerTodasLasValoraciones } = require('../controllers/cursos.controllers')
 
 const multer = require('../middlewares/multer')
 const auth = require('../middlewares/auth')
@@ -16,5 +16,6 @@ router.put('/:idCurso', auth('admin'), editarCurso)
 router.put('/estado/:idCurso', auth('admin'), cambiarEstadoCurso)
 router.post('/whatsapp', whatsAppApi)
 router.post('/puntuar/:idCurso', auth('usuario'), puntuarCurso)
+router.get('/valoraciones/:idCurso', auth('admin'), obtenerTodasLasValoraciones)
 
 module.exports = router
