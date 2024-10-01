@@ -240,6 +240,80 @@ if(result.status === 400){
   }
 }}
 
+const puntuarCurso = async (idUsuario, idCurso, body) => {
+  try {
+    const curso = await CursoModel.findById(idCurso)
+    const usuario = await Usuario.findById(idUsuario)
+
+    if (!curso) {
+      return {
+        msg: "Curso no encontrado",
+        statusCode: 404
+      };
+    }
+    
+    const cursoExiste = usuario.carrito.find((curso) => curso.id === idCurso)
+    const cursoComprado = usuario.cursos.find((curso) => curso.id === idCurso)
+
+    if(!cursoExiste) {
+      if(cursoComprado){
+        if (!curso.habilitado) {
+          return {
+            msg: "Curso deshabilitado",
+            statusCode: 500
+          };
+        }
+        if (!body.valoracion || body.valoracion < 1 || body.valoracion > 5) {
+          return {
+            msg: "Debes introducir una valoracion entre 1 y 5",
+            statusCode: 500
+          };
+        }
+        
+        const posicionValoracion = curso.valoracion.findIndex((valoracion) => valoracion.idUsuario === idUsuario)
+
+        if(posicionValoracion === -1){
+          curso.valoracion.push({
+            idUsuario: idUsuario,
+            valoracion: body.valoracion
+          })    
+          await curso.save()
+          return {
+            msg: "Curso puntuado",
+            statusCode: 200
+          }
+        } else {
+          curso.valoracion[posicionValoracion].valoracion = body.valoracion
+          curso.markModified('valoracion');
+          await curso.save()
+          return {
+            msg: "Curso puntuado (modificando puntuacion)",
+            statusCode: 200
+          }
+        }
+      } else {
+        return {
+          msg: "Debes haber comprado el curso para poder puntuarlo",
+          statusCode: 500
+        };
+      }
+      
+    } else {
+      return {
+        msg: "El curso no existe",
+        statusCode: 200
+      }
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      msg: "Error al puntuar curso",
+      statusCode: 500,
+      error
+    };
+  }  
+}
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
@@ -250,5 +324,6 @@ module.exports = {
   agregarEliminarCursoDelCarrito,
   cambiarEstadoCurso,
   obtenerTodosLosCursosHabilitados,
-  mensajeWhatsApp
+  mensajeWhatsApp,
+  puntuarCurso
 }
