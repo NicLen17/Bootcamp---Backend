@@ -103,6 +103,16 @@ const comprar = async (req, res) => {
   }
 }
 
+const obtenerCursosUsuario = async (req, res) => {
+  const result = await serviceUsuario.obtenerCursosUsuario(req.idUsuario)
+
+  if(result.statusCode === 200){
+      res.status(200).json(result.cursos)
+  }else{
+    res.status(500).json({msg: result.msg})
+  }
+}
+
 module.exports = {
     listarUsuarios,
     obtenerUsuario,
@@ -112,5 +122,6 @@ module.exports = {
     editarUsuario,
     eliminarUsuario,
     obtenerCarrito,
-    comprar
+    comprar,
+    obtenerCursosUsuario
 }

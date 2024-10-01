@@ -269,6 +269,30 @@ const comprar = async (idUsuario) => {
   }
 }
 
+const obtenerCursosUsuario = async (idUsuario) => {
+  try {
+    const usuario = await Usuario.findById(idUsuario)
+    
+    if (!usuario) {
+      return {
+        msg: "Usuario no encontrado",
+        statusCode: 404
+      };
+    }
+
+    return{
+      cursos: usuario.cursos,
+      statusCode: 200
+    }
+  } catch (error) {
+    return {
+      msg:'Error al obtener los cursos del usuario',
+      statusCode: 500,
+      error
+     }
+  }
+}
+
 
 module.exports= {
     listarUsuarios,
@@ -279,5 +303,6 @@ module.exports= {
     editarUsuario,
     eliminarUsuario,
     obtenerCarrito,
-    comprar
+    comprar,
+    obtenerCursosUsuario
 }
