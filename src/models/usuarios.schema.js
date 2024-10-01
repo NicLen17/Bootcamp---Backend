@@ -40,6 +40,14 @@ const usuarioSchema = new mongoose.Schema({
       message: "La contraseña debe contener al menos una letra, un número y un símbolo",
     },
   },
+  resetPasswordToken: {
+    type: String,
+    default: null,
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null,
+  },
   bloqueado: {
     type: Boolean,
     default: false,
