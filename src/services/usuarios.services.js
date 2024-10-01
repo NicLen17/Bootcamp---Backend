@@ -2,6 +2,7 @@ const Usuario = require("../models/usuarios.schema")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { registroUsuario, bajaUsuario } = require("../helpers/mensajes")
+const { MercadoPagoConfig, Preference } = require("mercadopago")
 
 const nuevoUsuario = async(body) => {
   try {
@@ -237,7 +238,9 @@ const obtenerCarrito = async (idUsuario) => {
 const comprar = async (idUsuario) => {
   try {
     const usuario = await Usuario.findById(idUsuario)
-
+    const client = new  MercadoPagoConfig({accessToken: process.env.MP_TOKEN})
+    const preference = new Preference(client)
+    
     if (!usuario) {
       return {
         msg: "Usuario no encontrado",
@@ -252,12 +255,32 @@ const comprar = async (idUsuario) => {
       };
     }
     
+    const items = usuario.carrito.map((curso) => ({
+      title: curso.nombre, 
+      quantity: 1, 
+      unit_price: curso.precio, 
+      currency_id: "ARS", 
+    }));
+  
+    const resultMp = await preference.create({
+      body: {
+        items: items,
+        back_urls: {
+          success: 'https://ceba-mate.vercel.app/',
+          failure: 'https://ceba-mate.vercel.app/#/contact',
+          pending: 'https://ceba-mate.vercel.app/#/contact'
+        },
+        auto_return: 'approved'
+      }
+    })
+
     usuario.cursos = usuario.cursos.concat(usuario.carrito);
     usuario.carrito = [];
     await usuario.save();
     
     return { 
-      msg: "Operacion exitosa",
+      resultMp,
+      msg: "Operacion exitosa!",
       statusCode: 200 
     };
   } catch (error) {
@@ -304,5 +327,5 @@ module.exports= {
     eliminarUsuario,
     obtenerCarrito,
     comprar,
-    obtenerCursosUsuario
+    obtenerCursosUsuario,
 }
