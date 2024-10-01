@@ -314,6 +314,30 @@ const puntuarCurso = async (idUsuario, idCurso, body) => {
   }  
 }
 
+const obtenerTodasLasValoraciones = async (idCurso) => {
+  try {
+    const curso = await CursoModel.findById(idCurso)
+
+    if (!curso) {
+      return {
+        msg: "Curso no encontrado",
+        statusCode: 404
+      };
+    }
+
+    return {
+      valoraciones: curso.valoracion,
+      statusCode: 200,
+    }
+  } catch (error) {
+    return {
+      msg: "Error al traer todas las valoraciones",
+      statusCode: 500,
+      error
+    };
+  }
+}
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
