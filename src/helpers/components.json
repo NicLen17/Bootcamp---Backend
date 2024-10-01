@@ -1,0 +1,93 @@
+{
+  "schemas": {
+    "Cursos": {
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 70,
+          "description": "El nombre del curso, único y obligatorio",
+          "example": "Introducción a Node.js"
+        },
+        "imagen": {
+          "type": "string",
+          "pattern": "^https?:\\/\\/.+\\.(jpg|jpeg|png|gif)$",
+          "description": "URL de la imagen del curso (debe ser en formato jpg, jpeg, png o gif)",
+          "example": "https://example.com/imagen.jpg"
+        },
+        "descripcion": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 70,
+          "description": "Descripción breve del curso",
+          "example": "Este curso te enseña los fundamentos de Node.js"
+        },
+        "contenido": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^https?:\\/\\/.+\\.(mp4|mov|avi|mkv|flv)$"
+          },
+          "description": "URLs de videos del contenido del curso",
+          "example": [
+            "https://example.com/video1.mp4",
+            "https://example.com/video2.mov"
+          ]
+        },
+        "tecnologias": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 15
+          },
+          "description": "Lista de tecnologías utilizadas en el curso",
+          "example": ["Node.js", "MongoDB"]
+        },
+        "duracion": {
+          "type": "object",
+          "properties": {
+            "duracion": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 1000,
+              "description": "Duración del curso en horas",
+              "example": 10
+            }
+          }
+        },
+        "precio": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Precio del curso, no puede ser negativo",
+          "example": 100
+        },
+        "alumnos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Lista de IDs de los alumnos inscritos",
+          "example": ["alumno1", "alumno2"]
+        },
+        "valoracion": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "description": "Valoración del curso, cada valor debe estar entre 0 y 5",
+          "example": [5, 4.5]
+        },
+        "habilitado": {
+          "type": "boolean",
+          "description": "Indica si el curso está habilitado o no",
+          "example": true
+        }
+      },
+      "required": ["nombre", "descripcion", "tecnologias", "precio"]
+    }
+  }
+}

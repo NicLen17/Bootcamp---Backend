@@ -1,0 +1,57 @@
+{
+  "/pets": {
+    "get": {
+      "summary": "Obtiene todas las mascotas",
+      "tags": ["Pets"],
+      "responses": {
+        "200": {
+          "description": "Lista de mascotas",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error del servidor"
+        }
+      }
+    }
+  },
+  "/pets/{petId}": {
+    "get": {
+      "summary": "Obtiene una mascota por su ID",
+      "tags": ["Pets"],
+      "parameters": [
+        {
+          "name": "petId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Detalles de la mascota",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Mascota no encontrada"
+        }
+      }
+    }
+  }
+}

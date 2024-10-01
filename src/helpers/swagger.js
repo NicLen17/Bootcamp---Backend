@@ -1,4 +1,6 @@
 const path = require('path')
+const components = require('./components.json')
+const paths = require('./paths.json')
 
 const swaggerSpec = {
   definition: {
@@ -13,7 +15,8 @@ const swaggerSpec = {
       {
         url: 'http://localhost:8080'
       }
-    ]
+    ],
+    components: components
   },
   apis: [`${path.join(__dirname, '../routes/*')}`]
 }
