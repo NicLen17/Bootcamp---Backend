@@ -83,6 +83,60 @@
         }
       },
       "required": ["nombre", "descripcion", "tecnologias", "precio"]
-    }
+    },
+    "Usuario": {
+    "type": "object",
+    "properties": {
+      "nombre": {
+        "type": "string",
+        "example": "pepe123",
+        "description": "El nombre del usuario, entre 4 y 20 caracteres",
+        "minLength": 4,
+        "maxLength": 20
+      },
+      "email": {
+        "type": "string",
+        "example": "pepe123@dominio.com",
+        "description": "El correo electrónico del usuario, debe ser único y válido, entre 10 y 50 caracteres",
+        "minLength": 10,
+        "maxLength": 50
+      },
+      "password": {
+        "type": "string",
+        "example": "123456a!",
+        "description": "La contraseña del usuario, entre 6 y 75 caracteres, debe contener una letra, un numero y un simbolo",
+        "minLength": 6,
+        "maxLength": 75
+      },
+      "bloqueado": {
+        "type": "boolean",
+        "default": false,
+        "description": "Indica si el usuario está bloqueado"
+      },
+      "rol": {
+        "type": "string",
+        "enum": ["admin", "usuario"],
+        "default": "usuario",
+        "description": "El rol del usuario, puede ser 'admin' o 'usuario'"
+      },
+      "carrito": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "default": [],
+        "description": "El carrito de compras del usuario"
+      },
+      "cursos": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "default": [],
+        "description": "La lista de cursos del usuario"
+      }
+    },
+    "required": ["nombre", "email", "password"]
+  }
   }
 }
