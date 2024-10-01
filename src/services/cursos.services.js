@@ -338,6 +338,47 @@ const obtenerTodasLasValoraciones = async (idCurso) => {
   }
 }
 
+const obtenerValoracionGeneral = async (idCurso) => {
+  try {
+    const curso = await CursoModel.findById(idCurso)
+
+    if (!curso) {
+      return {
+        msg: "Curso no encontrado",
+        statusCode: 404
+      };
+    }
+
+    if (curso.valoracion.length === 0) {
+      return {
+        msg: "El curso no tiene valoraciones",
+        valoracion: 0,
+        statusCode: 200
+      };
+    }
+
+    let totalValoracion = 0;
+
+    for (let i = 0; i < curso.valoracion.length; i++) {
+      totalValoracion += curso.valoracion[i].valoracion;
+    }
+
+    const promedioValoracion = totalValoracion / curso.valoracion.length;
+
+    return {
+      msg: `El curso tiene ${curso.valoracion.length} valoraciones`,
+      valoracion: Number(promedioValoracion.toFixed(2)),
+      statusCode: 200
+    };
+  } catch (error) {
+    return {
+      msg: "Error al traer todas las valoraciones",
+      statusCode: 500,
+      error
+    };
+  }
+}
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
@@ -350,5 +391,6 @@ module.exports = {
   obtenerTodosLosCursosHabilitados,
   mensajeWhatsApp,
   puntuarCurso,
-  obtenerTodasLasValoraciones
+  obtenerTodasLasValoraciones,
+  obtenerValoracionGeneral
 }
