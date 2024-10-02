@@ -1,7 +1,7 @@
 const Usuario = require("../models/usuarios.schema")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { registroUsuario, bajaUsuario, recuperoContraseniaUsuario } = require("../helpers/mensajes")
+const { registroUsuario, bajaUsuario, recuperoContraseniaUsuario, pagoProductosUsuario } = require("../helpers/mensajes")
 const { MercadoPagoConfig, Preference } = require("mercadopago")
 
 const nuevoUsuario = async (body) => {
@@ -277,6 +277,8 @@ const comprar = async (idUsuario) => {
         auto_return: 'approved'
       }
     })
+
+    await pagoProductosUsuario(usuario.nombre, usuario.email, items); //Llamado a nodemailer
 
     usuario.cursos = usuario.cursos.concat(usuario.carrito);
     usuario.carrito = [];

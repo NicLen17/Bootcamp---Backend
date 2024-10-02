@@ -40,7 +40,13 @@ const registroUsuario = async (nombre, emailUsuario) => {
 }
 
 
-const pagoProductosUsuario = async (nombre, emailUsuario) => {
+const pagoProductosUsuario = async (nombre, emailUsuario, items) => {
+    const itemsHTML = items.map(item => `
+        <li>
+            <strong>Curso:</strong> ${item.title} <br>
+            <strong style="color: green">Precio:</strong> $${item.unit_price}
+        </li>
+    `).join('');
     const info = await transporter.sendMail({
         from: `Pago exitoso!" <${process.env.GMAIL_USER}>`, 
         to: `${emailUsuario}`, 
@@ -52,11 +58,18 @@ const pagoProductosUsuario = async (nombre, emailUsuario) => {
                 </div>
 
                 <div style="text-align: center; padding: 20px;">
-                    <p style="font-size: 22px; color: #333;">Has adquirido un curso en nuestro bootcamp. ¡Estamos emocionados de acompañarte en este nuevo viaje de aprendizaje!</p>
+                    <p style="font-size: 22px; color: #333;">Has adquirido un curso/s en nuestro bootcamp. ¡Estamos emocionados de acompañarte en este nuevo viaje de aprendizaje!</p>
                 </div>
 
                 <div style="text-align: center; padding: 20px;">
                     <img src="https://smokeshopcolombia.com/wp-content/uploads/2023/11/wired-gradient-1092-applause.gif" alt="Compra Exitosa" style="max-width: 100%; height: auto;">
+                </div>
+
+                <div style="text-align: center; padding: 20px; background-color: #CFCFCF; border: 4px solid black; border-radius: 5px; width: 400px; margin: 0 auto;">
+                    <h2 style="color: white;">ORDEN DE COMPRA:</h2>
+                    <ul style="list-style: none; font-size: 18px; color: white; padding: 0;">
+                        ${itemsHTML}
+                    </ul>
                 </div>
 
                 <div style="text-align: center; padding: 20px; font-size: 22px; color: #333;">
@@ -130,7 +143,6 @@ const bajaUsuario = async (nombre, emailUsuario) => {
             </div>
     `, // html body
     });
-    
 }
 
 module.exports = {
