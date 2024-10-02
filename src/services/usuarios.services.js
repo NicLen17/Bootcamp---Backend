@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { registroUsuario, bajaUsuario, recuperoContraseniaUsuario, pagoProductosUsuario } = require("../helpers/mensajes")
 const { MercadoPagoConfig, Preference } = require("mercadopago")
+const CursoModel = require('../models/cursos.schema')
 
 const nuevoUsuario = async (body) => {
   try {
@@ -279,6 +280,16 @@ const comprar = async (idUsuario) => {
     })
 
     await pagoProductosUsuario(usuario.nombre, usuario.email, items); //Llamado a nodemailer
+
+    for (const curso of usuario.carrito) {
+      const cursoDb = await CursoModel.findById(curso.id);
+      if (cursoDb) {
+        if (!cursoDb.alumnos.includes(idUsuario)) {
+          cursoDb.alumnos.push(idUsuario);
+          await cursoDb.save();
+        }
+      }
+    }
 
     usuario.cursos = usuario.cursos.concat(usuario.carrito);
     usuario.carrito = [];
