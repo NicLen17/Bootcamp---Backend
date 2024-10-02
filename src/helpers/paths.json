@@ -332,5 +332,33 @@
         }
       }
     }
+  },
+  "/api/usuarios": {
+    "post": {
+      "tags": ["Usuarios"],
+      "summary": "Crear un nuevo usuario",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Usuario"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Usuario creado"
+        },
+        "400": {
+          "description": "Errores en la validación de datos"
+        },
+        "500": {
+          "description": "Error en la creación del usuario"
+        }
+      }
+    }
   }
+
 }

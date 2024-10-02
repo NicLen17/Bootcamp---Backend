@@ -6,7 +6,9 @@ const { MercadoPagoConfig, Preference } = require("mercadopago")
 
 const nuevoUsuario = async(body) => {
   try {
-    console.log(body)
+    delete body.carrito
+    delete body.cursos
+
     const usuarioExiste = await Usuario.findOne({nombre: body.nombre})
     const emailExiste = await Usuario.findOne({ email: body.email });
  
@@ -25,13 +27,12 @@ const nuevoUsuario = async(body) => {
     }
  
     const usuario = new Usuario(body)
- 
     let salt = bcrypt.genSaltSync();
     usuario.password = bcrypt.hashSync(body.password, salt);
 
-    // await registroUsuario(body.nombre, body.email); //Llamado a nodemailer
+    await registroUsuario(body.nombre, body.email); //Llamado a nodemailer
     
-    // await usuario.save()
+    await usuario.save()
     return {
       msg:'Usuario creado',
       statusCode: 201
