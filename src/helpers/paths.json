@@ -345,6 +345,150 @@
       }
     }
   },
+  "/api/cursos/puntuar/{idCurso}": {
+    "post": {
+      "tags": ["Cursos"],
+      "summary": "Puntuar un curso del usuario",
+      "description": "Agrega o elimina un curso del carrito. Solo los usuarios pueden hacerlo.",
+      "operationId": "puntuarCurso",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                  "valoracion": { "type": "number", "example": "3.5" }
+                }
+            }
+          }
+        }
+      },
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso al cual se agregara o se eliminara del carrito",
+          "example": "66e53d1274b23ab08d4cea1e"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZiNGEzMjMzNjk3ZDc0YjczOTZiNDYiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3ODI4MzQzfQ.45fbllxFTh6xJx7KDKR9DTAk3vpyw_nPTFnP_2-w6v4"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Curso puntuado"
+        },
+        "500": {
+          "description": "Error al puntuar"
+        }
+      }
+    }
+  },
+  "/api/cursos/valoraciones/{idCurso}": {
+    "get": {
+      "tags": ["Cursos"],
+      "summary": "Obtener todas las valoraciones",
+      "description": "Obtiene todas las valoraciones de un curso. Solo los administradores pueden hacerlo.",
+      "operationId": "obtenerTodasLasValoraciones",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        },
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso al cual se obtendran las valoraciones",
+          "example": "66e53d1274b23ab08d4cea1e"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Lista de todas las valoraciones",
+          "content": {
+            "application/json": {
+            "schema": {
+              "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "idUsuario": { "type": "string", "example": "66f058b3b60cdb989fac4cfb" },
+                    "valoracion": { "type": "number", "example": "4.5" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al traer todos los cursos"
+        }
+      }
+    }
+  },
+  "/api/cursos/valoracionGeneral/{idCurso}": {
+    "get": {
+      "tags": ["Cursos"],
+      "summary": "Obtener promedio de valoraciones",
+      "description": "Obtiene un promedio de valoraciones de un curso.",
+      "operationId": "obtenerValoracionGeneral",
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso al cual se obtendran las valoraciones",
+          "example": "66e53d1274b23ab08d4cea1e"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Promedio de todas las valoraciones",
+          "content": {
+            "application/json": {
+            "schema": {
+              "type": "object",
+                "properties": {
+                  "valoracion": { "type": "number", "example": "4.5" },
+                  "msg": { "type": "string", "example": "El curso tiene 2 valoraciones" }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error al traer todos los cursos"
+          }
+        }
+      }
+    }
+  },
   "/api/usuarios": {
     "post": {
       "tags": ["Usuarios"],
@@ -773,9 +917,9 @@
       }
     }
   },
-  "/api/cursos/whatsapp": {
+  "/api/usuarios/whatsapp": {
     "post": {
-      "tags": ["Cursos"],
+      "tags": ["Usuarios"],
       "summary": "Enviar mensaje de WhatsApp",
       "description": "Envía un mensaje de prueba usando la API de WhatsApp.",
       "operationId": "whatsAppApi",
