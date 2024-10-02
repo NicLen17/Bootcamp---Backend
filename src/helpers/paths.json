@@ -1,0 +1,936 @@
+{
+  "/api/cursos": {
+    "post": {
+      "tags": ["Cursos"],
+      "summary": "Crear un nuevo curso",
+      "description": "Crea un curso nuevo. Solo los administradores pueden hacerlo.",
+      "operationId": "crearCurso",
+      "security": [{ "bearerAuth": [] }],
+      "requestBody": {
+        "description": "Datos del nuevo curso",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Cursos" }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "201": {
+          "description": "Curso creado con éxito"
+        },
+        "500": {
+          "description": "Error al crear el usuario"
+        }
+      }
+    },
+    "get": {
+      "tags": ["Cursos"],
+      "summary": "Obtener todos los cursos",
+      "description": "Obtiene todos los cursos. Solo los administradores pueden hacerlo.",
+      "operationId": "obtenerTodosLosCursos",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Lista de todos los cursos",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/Cursos" }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al traer todos los cursos"
+        }
+      }
+    }
+  },
+  "/api/cursos/agregarImagen/{idCurso}": {
+    "post": {
+      "tags": ["Cursos"],
+      "summary": "Agregar una imagen al curso",
+      "description": "Agrega una imagen a un curso existente. Solo los administradores pueden hacerlo.",
+      "operationId": "agregarImagenCurso",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso al cual se agregará la imagen",
+          "example": "66e53d1274b23ab08d4cea1e"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "requestBody": {
+        "description": "Imagen a subir",
+        "required": true,
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "imagen": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Imagen agregada con éxito"
+        },
+        "500": {
+          "description": "Error al agregar la imagen"
+        }
+      }
+    }
+  },
+  "/api/cursos/agregarEliminarCursoCarrito/{idCurso}": {
+    "post": {
+      "tags": ["Cursos"],
+      "summary": "Agregar o eliminar un curso del carrito del usuario",
+      "description": "Agrega o elimina un curso del carrito. Solo los usuarios pueden hacerlo.",
+      "operationId": "agregarEliminarCursoCarrito",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso al cual se agregara o se eliminara del carrito",
+          "example": "66e53d1274b23ab08d4cea1e"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZiNGEzMjMzNjk3ZDc0YjczOTZiNDYiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3ODI4MzQzfQ.45fbllxFTh6xJx7KDKR9DTAk3vpyw_nPTFnP_2-w6v4"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Curso agregado/eliminado del carrito"
+        },
+        "500": {
+          "description": "Error al agregar/eliminar curso del carrito"
+        }
+      }
+    }
+  },
+  "/api/cursos/cursosHabilitados": {
+    "get": {
+      "tags": ["Cursos"],
+      "summary": "Obtener cursos habilitados",
+      "description": "Obtiene la lista de todos los cursos habilitados.",
+      "operationId": "obtenerTodosLosCursosHabilitados",
+      "responses": {
+        "200": {
+          "description": "Lista de cursos habilitados obtenida con éxito",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/Cursos" }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al traer cursos habilitados"
+        }
+      }
+    }
+  },
+  "/api/cursos/{idCurso}": {
+    "get": {
+      "tags": ["Cursos"],
+      "summary": "Obtener un curso por ID",
+      "description": "Obtiene los detalles de un curso específico.",
+      "operationId": "obtenerUnCurso",
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso a obtener"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Curso obtenido con éxito",
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Cursos" }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al obtener un curso"
+        }
+      }
+    },
+    "delete": {
+      "tags": ["Cursos"],
+      "summary": "Eliminar un curso",
+      "description": "Elimina un curso específico. Solo los administradores pueden hacerlo.",
+      "operationId": "eliminarCurso",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso a eliminar",
+          "example": "66fc821c6a77ad167885f97c"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Curso eliminado con éxito"
+        },
+        "500": {
+          "description": "Error al eliminar un curso"
+        }
+      }
+    },
+    "put": {
+      "tags": ["Cursos"],
+      "summary": "Editar un curso",
+      "description": "Actualiza los datos de un curso específico. Solo los administradores pueden hacerlo.",
+      "operationId": "editarCurso",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso a editar",
+          "example": "66e53d1274b23ab08d4cea1e"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "requestBody": {
+        "description": "Datos actualizados del curso",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Cursos" }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Curso actualizado con éxito"
+        },
+        "500": {
+          "description": "Error al actualizar un curso"
+        }
+      }
+    }
+  },
+  "/api/cursos/estado/{idCurso}": {
+    "put": {
+      "tags": ["Cursos"],
+      "summary": "Cambiar estado del curso",
+      "description": "Cambia el estado (habilitado/deshabilitado) de un curso. Solo los administradores pueden hacerlo.",
+      "operationId": "cambiarEstadoCurso",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso cuyo estado cambiará",
+          "example": "66e53d1274b23ab08d4cea1e"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Estado del curso cambiado con éxito"
+        },
+        "500": {
+          "description": "Error al cambiar el estado del curso"
+        }
+      }
+    }
+  },
+  "/api/cursos/puntuar/{idCurso}": {
+    "post": {
+      "tags": ["Cursos"],
+      "summary": "Puntuar un curso del usuario",
+      "description": "Agrega o elimina un curso del carrito. Solo los usuarios pueden hacerlo.",
+      "operationId": "puntuarCurso",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                  "valoracion": { "type": "number", "example": "3.5" }
+                }
+            }
+          }
+        }
+      },
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso al cual se agregara o se eliminara del carrito",
+          "example": "66e53d1274b23ab08d4cea1e"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZiNGEzMjMzNjk3ZDc0YjczOTZiNDYiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3ODI4MzQzfQ.45fbllxFTh6xJx7KDKR9DTAk3vpyw_nPTFnP_2-w6v4"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Curso puntuado"
+        },
+        "500": {
+          "description": "Error al puntuar"
+        }
+      }
+    }
+  },
+  "/api/cursos/valoraciones/{idCurso}": {
+    "get": {
+      "tags": ["Cursos"],
+      "summary": "Obtener todas las valoraciones",
+      "description": "Obtiene todas las valoraciones de un curso. Solo los administradores pueden hacerlo.",
+      "operationId": "obtenerTodasLasValoraciones",
+      "security": [{ "bearerAuth": [] }],
+      "parameters": [
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        },
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso al cual se obtendran las valoraciones",
+          "example": "66e53d1274b23ab08d4cea1e"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Lista de todas las valoraciones",
+          "content": {
+            "application/json": {
+            "schema": {
+              "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "idUsuario": { "type": "string", "example": "66f058b3b60cdb989fac4cfb" },
+                    "valoracion": { "type": "number", "example": "4.5" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al traer todos los cursos"
+        }
+      }
+    }
+  },
+  "/api/cursos/valoracionGeneral/{idCurso}": {
+    "get": {
+      "tags": ["Cursos"],
+      "summary": "Obtener promedio de valoraciones",
+      "description": "Obtiene un promedio de valoraciones de un curso.",
+      "operationId": "obtenerValoracionGeneral",
+      "parameters": [
+        {
+          "name": "idCurso",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del curso al cual se obtendran las valoraciones",
+          "example": "66e53d1274b23ab08d4cea1e"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Promedio de todas las valoraciones",
+          "content": {
+            "application/json": {
+            "schema": {
+              "type": "object",
+                "properties": {
+                  "valoracion": { "type": "number", "example": "4.5" },
+                  "msg": { "type": "string", "example": "El curso tiene 2 valoraciones" }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error al traer todos los cursos"
+          }
+        }
+      }
+    }
+  },
+  "/api/usuarios": {
+    "post": {
+      "tags": ["Usuarios"],
+      "summary": "Crear un nuevo usuario",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Usuario"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Usuario creado"
+        },
+        "400": {
+          "description": "Errores en la validación de datos"
+        },
+        "500": {
+          "description": "Error en la creación del usuario"
+        }
+      }
+    },
+    "get": {
+      "tags": ["Usuarios"],
+      "summary": "Listar todos los usuarios",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNjYyOTgwN30.iC5PdhqxMoDV32l2_7b4YOk8I-yoAT3g7NsYj8QU3Lo"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Lista de usuarios",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Usuario"
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al obtener los usuarios"
+        }
+      }
+    }
+  },
+  "/api/usuarios/login": {
+    "post": {
+      "tags": ["Usuarios"],
+      "summary": "Inicio de sesión de usuario",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+                "properties": {
+                  "nombre": { "type": "string", "example": "pepe123" },
+                  "password": { "type": "string", "example": "123456a!" }
+                }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Usuario logueado",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "msg": { "type": "string" },
+                  "rol": { "type": "string" },
+                  "token": { "type": "string" },
+                  "idUsuario": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Usuario y/o contraseña incorrectos"
+        }
+      }
+    }
+  },
+  "/api/usuarios/carrito": {
+    "get": {
+      "tags": ["Usuarios"],
+      "summary": "Obtener el carrito del usuario",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZiNGEzMjMzNjk3ZDc0YjczOTZiNDYiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3ODI4MzQzfQ.45fbllxFTh6xJx7KDKR9DTAk3vpyw_nPTFnP_2-w6v4"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Carrito del usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "example": "66fc821c6a77ad167885f97c" },
+                    "nombre": { "type": "string", "example": "Introducción a Node.js" },
+                    "precio": { "type": "number", "example": 2500 }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al obtener el carrito"
+        }
+      }
+    }
+  },
+  "/api/usuarios/cursos": {
+    "get": {
+      "tags": ["Usuarios"],
+      "summary": "Obtener los cursos del usuario",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZiNGEzMjMzNjk3ZDc0YjczOTZiNDYiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3ODI4MzQzfQ.45fbllxFTh6xJx7KDKR9DTAk3vpyw_nPTFnP_2-w6v4"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Lista de cursos del usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "example": "66fc821c6a77ad167885f97c" },
+                    "nombre": { "type": "string", "example": "Introducción a Node.js" },
+                    "precio": { "type": "number", "example": 2500 }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al obtener los cursos"
+        }
+      }
+    }
+  },
+  "/api/usuarios/{idUsuario}": {
+    "get": {
+      "tags": ["Usuarios"],
+      "summary": "Obtener un usuario por ID",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario",
+          "example": "66ea47211a92be5f802042a1"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Datos del usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al obtener el usuario"
+        }
+      }
+    },
+    "put": {
+      "tags": ["Usuarios"],
+      "summary": "Editar un usuario",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario a editar",
+          "example": "66fb4a3233697d74b7396b46"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Usuario"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Usuario editado con éxito"
+        },
+        "500": {
+          "description": "Error al editar el usuario"
+        }
+      }
+    },
+    "delete": {
+      "tags": ["Usuarios"],
+      "summary": "Eliminar un usuario",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario a eliminar",
+          "example": "66fc8f2bc6131f758c4b4e66"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Usuario eliminado con éxito"
+        },
+        "500": {
+          "description": "Error al eliminar el usuario"
+        }
+      }
+    }
+  },
+  "/api/usuarios/estado/{idUsuario}": {
+    "put": {
+      "tags": ["Usuarios"],
+      "summary": "Cambiar el estado de bloqueo de un usuario",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario a bloquear/desbloquear",
+          "example": "66fb4a3233697d74b7396b46"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Usuario bloqueado/desbloqueado"
+        },
+        "500": {
+          "description": "Error al cambiar el estado del usuario"
+        }
+      }
+    }
+  },
+  "/api/usuarios/comprar/{idUsuario}": {
+    "post": {
+      "tags": ["Usuarios"],
+      "summary": "Comprar los cursos del carrito",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario que realiza la compra",
+          "example": "66fb4a3233697d74b7396b46"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZiNGEzMjMzNjk3ZDc0YjczOTZiNDYiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3ODI4MzQzfQ.45fbllxFTh6xJx7KDKR9DTAk3vpyw_nPTFnP_2-w6v4"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Compra realizada con éxito",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "msg": { "type": "string", "example": "Operacion exitosa!" },
+                  "link_compra": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al realizar la compra"
+        }
+      }
+    }
+  },
+  "/api/usuarios/whatsapp": {
+    "post": {
+      "tags": ["Usuarios"],
+      "summary": "Enviar mensaje de WhatsApp",
+      "description": "Envía un mensaje de prueba usando la API de WhatsApp.",
+      "operationId": "whatsAppApi",
+      "responses": {
+        "200": {
+          "description": "Mensaje enviado con éxito"
+        },
+        "500": {
+          "description": "Error al enviar el mensaje"
+        }
+      }
+    }
+  }
+}
