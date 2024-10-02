@@ -1,3 +1,4 @@
+const { token } = require('morgan')
 const serviceUsuario = require('../services/usuarios.services')
 const { validationResult } = require('express-validator')
 
@@ -97,11 +98,55 @@ const comprar = async (req, res) => {
   const result = await serviceUsuario.comprar(req.idUsuario)
 
   if(result.statusCode === 200){
-      res.status(200).json({msg: result.msg})
+      res.status(200).json({
+      msg: result.msg,
+      link_compra: result.resultMp.sandbox_init_point
+    });
   }else{
     res.status(500).json({msg: result.msg})
   }
 }
+
+const obtenerCursosUsuario = async (req, res) => {
+  const result = await serviceUsuario.obtenerCursosUsuario(req.idUsuario)
+
+  if(result.statusCode === 200){
+      res.status(200).json(result.cursos)
+  }else{
+    res.status(500).json({msg: result.msg})
+  }
+}
+
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const result = await serviceUsuario.forgotPassword(email);
+
+  if (result.statusCode === 200) {
+    res.status(200).json({ 
+      token: result.token,
+      msg: result.msg 
+    });
+  } else {
+    res.status(result.statusCode).json({ msg: result.msg });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { password } = req.body;
+  const token = req.params.token;
+
+  const result = await serviceUsuario.resetPassword(password, token);
+
+  if (result.statusCode === 200) {
+    res.status(200).json({ msg: result.msg });
+  } else {
+    res.status(result.statusCode).json({ 
+      msg: result.msg,
+      error: result.error
+    });
+  }
+};
+
 
 module.exports = {
     listarUsuarios,
@@ -112,5 +157,8 @@ module.exports = {
     editarUsuario,
     eliminarUsuario,
     obtenerCarrito,
-    comprar
+    comprar,
+    obtenerCursosUsuario,
+    forgotPassword,
+    resetPassword
 }

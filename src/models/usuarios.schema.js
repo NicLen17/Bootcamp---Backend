@@ -28,10 +28,25 @@ const usuarioSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: [true, "La contraseña es obligatoria"],
     trim: true,
-    maxlength: 75,
-    minlength: 6,
+    minlength: [6, "La contraseña debe tener al menos 6 caracteres"],
+    maxlength: [75, "La contraseña no debe exceder los 75 caracteres"],
+    validate: {
+      validator: (value) => {
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,75}$/;
+        return passwordPattern.test(value);
+      },
+      message: "La contraseña debe contener al menos una letra, un número y un símbolo",
+    },
+  },
+  resetPasswordToken: {
+    type: String,
+    default: null,
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null,
   },
   bloqueado: {
     type: Boolean,
