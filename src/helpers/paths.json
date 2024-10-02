@@ -23,7 +23,8 @@
           "description": "Token de autenticación",
           "schema": {
             "type": "string"
-          }
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
         }
       ],
       "responses": {
@@ -49,7 +50,8 @@
           "description": "Token de autenticación",
           "schema": {
             "type": "string"
-          }
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
         }
       ],
       "responses": {
@@ -85,7 +87,8 @@
           "schema": {
             "type": "string"
           },
-          "description": "ID del curso al cual se agregará la imagen"
+          "description": "ID del curso al cual se agregará la imagen",
+          "example": "66e53d1274b23ab08d4cea1e"
         },
         {
           "name": "auth",
@@ -94,7 +97,8 @@
           "description": "Token de autenticación",
           "schema": {
             "type": "string"
-          }
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
         }
       ],
       "requestBody": {
@@ -139,7 +143,8 @@
           "schema": {
             "type": "string"
           },
-          "description": "ID del curso al cual se agregara o se eliminara del carrito"
+          "description": "ID del curso al cual se agregara o se eliminara del carrito",
+          "example": "66e53d1274b23ab08d4cea1e"
         },
         {
           "name": "auth",
@@ -148,7 +153,8 @@
           "description": "Token de autenticación",
           "schema": {
             "type": "string"
-          }
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZiNGEzMjMzNjk3ZDc0YjczOTZiNDYiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3ODI4MzQzfQ.45fbllxFTh6xJx7KDKR9DTAk3vpyw_nPTFnP_2-w6v4"
         }
       ],
       "responses": {
@@ -230,7 +236,8 @@
           "schema": {
             "type": "string"
           },
-          "description": "ID del curso a eliminar"
+          "description": "ID del curso a eliminar",
+          "example": "66fc821c6a77ad167885f97c"
         },
         {
           "name": "auth",
@@ -239,7 +246,8 @@
           "description": "Token de autenticación",
           "schema": {
             "type": "string"
-          }
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
         }
       ],
       "responses": {
@@ -265,7 +273,8 @@
           "schema": {
             "type": "string"
           },
-          "description": "ID del curso a editar"
+          "description": "ID del curso a editar",
+          "example": "66e53d1274b23ab08d4cea1e"
         },
         {
           "name": "auth",
@@ -274,7 +283,8 @@
           "description": "Token de autenticación",
           "schema": {
             "type": "string"
-          }
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
         }
       ],
       "requestBody": {
@@ -311,7 +321,8 @@
           "schema": {
             "type": "string"
           },
-          "description": "ID del curso cuyo estado cambiará"
+          "description": "ID del curso cuyo estado cambiará",
+          "example": "66e53d1274b23ab08d4cea1e"
         },
         {
           "name": "auth",
@@ -320,7 +331,8 @@
           "description": "Token de autenticación",
           "schema": {
             "type": "string"
-          }
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
         }
       ],
       "responses": {
@@ -705,6 +717,74 @@
         },
         "500": {
           "description": "Error al cambiar el estado del usuario"
+        }
+      }
+    }
+  },
+  "/api/usuarios/comprar/{idUsuario}": {
+    "post": {
+      "tags": ["Usuarios"],
+      "summary": "Comprar los cursos del carrito",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario que realiza la compra",
+          "example": "66fb4a3233697d74b7396b46"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZiNGEzMjMzNjk3ZDc0YjczOTZiNDYiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3ODI4MzQzfQ.45fbllxFTh6xJx7KDKR9DTAk3vpyw_nPTFnP_2-w6v4"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Compra realizada con éxito",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "msg": { "type": "string", "example": "Operacion exitosa!" },
+                  "link_compra": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al realizar la compra"
+        }
+      }
+    }
+  },
+  "/api/cursos/whatsapp": {
+    "post": {
+      "tags": ["Cursos"],
+      "summary": "Enviar mensaje de WhatsApp",
+      "description": "Envía un mensaje de prueba usando la API de WhatsApp.",
+      "operationId": "whatsAppApi",
+      "responses": {
+        "200": {
+          "description": "Mensaje enviado con éxito"
+        },
+        "500": {
+          "description": "Error al enviar el mensaje"
         }
       }
     }

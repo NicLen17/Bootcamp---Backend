@@ -29,7 +29,7 @@ router.get('/:idUsuario', auth('admin'), obtenerUsuario)
 router.put('/estado/:idUsuario', auth('admin'), cambiarEstadoUsuario)
 router.put('/:idUsuario', auth('admin'), editarUsuario)
 router.delete('/:idUsuario', auth('admin'), eliminarUsuario)
-router.post('/comprar/:idUsuario', auth('usuario'),comprar)
+router.post('/comprar/:idUsuario', auth('usuario'), comprar)
 router.post('/whatsapp', whatsAppApi)
 
 module.exports = router;
