@@ -61,10 +61,11 @@ const CursosSchema = new Schema({
     default: []
   },
   valoracion: {
-    type: [Number],
+    type: [],
     validate: {
       validator: function(array) {
-        return array.every(valoracion => valoracion >= 0 && valoracion <= 5);
+        
+        return array.every(valoracion => valoracion.valoracion >= 0 && valoracion.valoracion <= 5);
       },
       message: "Cada valoración debe estar entre 0 y 5"
     },
