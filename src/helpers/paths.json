@@ -358,6 +358,45 @@
           "description": "Error en la creación del usuario"
         }
       }
+    },
+    "get": {
+      "tags": ["Usuarios"],
+      "summary": "Listar todos los usuarios",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNjYyOTgwN30.iC5PdhqxMoDV32l2_7b4YOk8I-yoAT3g7NsYj8QU3Lo"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Lista de usuarios",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Usuario"
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al obtener los usuarios"
+        }
+      }
     }
   },
   "/api/usuarios/login": {
