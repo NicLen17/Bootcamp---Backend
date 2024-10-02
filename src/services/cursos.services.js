@@ -55,6 +55,9 @@ const obtenerUnCurso = async (id) => {
 
 const crearCurso = async (body) => {
   try {
+    delete body.alumnos;
+    delete body.valoracion;
+
     const curso = new CursoModel(body);
     await curso.save();
     return {
@@ -138,7 +141,6 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
     
     const cursoExiste = usuario.carrito.find((curso) => curso.id === idCurso)
     const cursoComprado = usuario.cursos.find((curso) => curso.id === idCurso)
-
     if(!cursoExiste) {
       if(!cursoComprado){
         if (!curso.habilitado) {
@@ -154,7 +156,6 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
           precio: curso.precio
         })
         await usuario.save()
-  
         return {
           msg: "Curso agregado al carrito",
           statusCode: 200
@@ -178,6 +179,7 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
       }
     }
   } catch (error) {
+    console.log(error)
     return {
       msg: "Error al agregar/eliminar del carrito",
       statusCode: 500,
@@ -189,8 +191,9 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
 const cambiarEstadoCurso = async (idCurso) => {
   try {
     const curso = await CursoModel.findById(idCurso)
+    console.log(curso)
     curso.habilitado = !curso.habilitado
-
+    console.log(curso)
     await curso.save()
 
     if(curso.habilitado) {

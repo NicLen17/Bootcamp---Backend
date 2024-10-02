@@ -1,0 +1,142 @@
+{
+  "schemas": {
+    "Cursos": {
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 70,
+          "description": "El nombre del curso, único y obligatorio",
+          "example": "Introducción a Node.js"
+        },
+        "imagen": {
+          "type": "string",
+          "pattern": "^https?:\\/\\/.+\\.(jpg|jpeg|png|gif)$",
+          "description": "URL de la imagen del curso (debe ser en formato jpg, jpeg, png o gif)",
+          "example": "https://example.com/imagen.jpg"
+        },
+        "descripcion": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 70,
+          "description": "Descripción breve del curso",
+          "example": "Este curso te enseña los fundamentos de Node.js"
+        },
+        "contenido": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^https?:\\/\\/.+\\.(mp4|mov|avi|mkv|flv)$"
+          },
+          "description": "URLs de videos del contenido del curso",
+          "example": [
+            "https://example.com/video1.mp4",
+            "https://example.com/video2.mov"
+          ]
+        },
+        "tecnologias": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 15
+          },
+          "description": "Lista de tecnologías utilizadas en el curso",
+          "example": ["Node.js", "MongoDB"]
+        },
+        "duracion": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 1000,
+          "description": "Duración del curso en horas",
+          "example": 10
+        },
+        "precio": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Precio del curso, no puede ser negativo",
+          "example": 100
+        },
+        "alumnos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Lista de IDs de los alumnos inscritos",
+          "example": ["alumno1", "alumno2"]
+        },
+        "valoracion": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "description": "Valoración del curso, cada valor debe estar entre 0 y 5",
+          "example": [5, 4.5]
+        },
+        "habilitado": {
+          "type": "boolean",
+          "description": "Indica si el curso está habilitado o no",
+          "example": true
+        }
+      },
+      "required": ["nombre", "descripcion", "tecnologias", "precio"]
+    },
+    "Usuario": {
+    "type": "object",
+    "properties": {
+      "nombre": {
+        "type": "string",
+        "example": "pepe123",
+        "description": "El nombre del usuario, entre 4 y 20 caracteres",
+        "minLength": 4,
+        "maxLength": 20
+      },
+      "email": {
+        "type": "string",
+        "example": "pepe123@dominio.com",
+        "description": "El correo electrónico del usuario, debe ser único y válido, entre 10 y 50 caracteres",
+        "minLength": 10,
+        "maxLength": 50
+      },
+      "password": {
+        "type": "string",
+        "example": "123456a!",
+        "description": "La contraseña del usuario, entre 6 y 75 caracteres, debe contener una letra, un numero y un simbolo",
+        "minLength": 6,
+        "maxLength": 75
+      },
+      "bloqueado": {
+        "type": "boolean",
+        "default": false,
+        "description": "Indica si el usuario está bloqueado"
+      },
+      "rol": {
+        "type": "string",
+        "enum": ["admin", "usuario"],
+        "default": "usuario",
+        "description": "El rol del usuario, puede ser 'admin' o 'usuario'"
+      },
+      "carrito": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "default": [],
+        "description": "El carrito de compras del usuario"
+      },
+      "cursos": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "default": [],
+        "description": "La lista de cursos del usuario"
+      }
+    },
+    "required": ["nombre", "email", "password"]
+  }
+  }
+}

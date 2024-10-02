@@ -4,6 +4,9 @@ const path = require('path')
 const cors = require('cors')
 const morgan = require('morgan')
 const logger = require('../src/utils/logger')
+const swaggerUI = require('swagger-ui-express')
+const swaggerJsDoc = require('swagger-jsdoc')
+const swaggerSpec = require('../src/helpers/swagger')
 
 class Server {
   constructor() {
@@ -17,6 +20,7 @@ class Server {
     this.app.use(express.static(path.join(__dirname, '../public')))
     this.app.use(cors())
     this.app.use(morgan('dev'))
+    this.app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)))
   }
 
 
