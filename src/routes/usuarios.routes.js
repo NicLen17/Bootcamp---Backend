@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { listarUsuarios, obtenerUsuario, crearUsuario, inicioSesion, cambiarEstadoUsuario, editarUsuario, eliminarUsuario, obtenerCarrito, comprar, obtenerCursosUsuario } = require('../controllers/usuarios.controllers')
+const { listarUsuarios, obtenerUsuario, crearUsuario, inicioSesion, cambiarEstadoUsuario, editarUsuario, eliminarUsuario, obtenerCarrito, comprar, obtenerCursosUsuario, forgotPassword, resetPassword } = require('../controllers/usuarios.controllers')
 const { check } = require('express-validator');
 const auth = require("../middlewares/auth");
 
@@ -30,5 +30,7 @@ router.put('/estado/:idUsuario', auth('admin'), cambiarEstadoUsuario)
 router.put('/:idUsuario', auth('admin'), editarUsuario)
 router.delete('/:idUsuario', auth('admin'), eliminarUsuario)
 router.post('/comprar/:idUsuario', auth('usuario'),comprar)
+router.post('/forgot-password', auth('usuario'), forgotPassword);
+router.post('/reset-password/:token', auth('usuario'), resetPassword);
 
 module.exports = router;
