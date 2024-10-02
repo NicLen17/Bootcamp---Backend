@@ -2,7 +2,8 @@ const cloudinary = require('../helpers/cloudinary');
 const { configHeaderWhatsApp } = require('../helpers/meta');
 const CursoModel = require('../models/cursos.schema')
 const Usuario = require('../models/usuarios.schema')
-const axios = require('axios')
+const axios = require('axios');
+const logger = require('../utils/logger');
 
 const obtenerTodosLosCursos = async () => {
   try {
@@ -167,7 +168,7 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
       
     } else {
       const posicionCurso = usuario.carrito.findIndex((curso) => curso.id === idCurso)
-      console.log(posicionCurso)
+      logger.info(posicionCurso)
       usuario.carrito.splice(posicionCurso, 1)
       await usuario.save()
       
@@ -213,7 +214,7 @@ const cambiarEstadoCurso = async (idCurso) => {
 }
 
 const mensajeWhatsApp = async() => {
-  console.log(process.env.META_MY_CEL)
+  logger.info(process.env.META_MY_CEL)
   const result = await axios.post(`https://graph.facebook.com/v20.0/${process.env.META_ID_CEL}/messages`, {
     messaging_product: 'whatsapp',
     to: `${process.env.META_MY_CEL}`,
