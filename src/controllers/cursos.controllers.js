@@ -85,6 +85,44 @@ const cambiarEstadoCurso = async (req, res) => {
     }
 }
 
+const whatsAppApi = async (req, res) => {
+    const result = await serviciosDeCursos.mensajeWhatsApp()
+    if (result.statusCode === 200) {
+        res.status(200).json({ msg: result.msg })
+    } else {
+        res.status(500).json({ msg: result.msg })
+    }
+}
+
+const puntuarCurso = async (req, res) => {
+    const result = await serviciosDeCursos.puntuarCurso(req.idUsuario, req.params.idCurso, req.body)
+  
+    if(result.statusCode === 200){
+        res.status(200).json({msg: result.msg})
+    }else{
+      res.status(500).json({msg: result.msg})
+    }
+}
+
+const obtenerTodasLasValoraciones = async (req, res) => {
+    const result = await serviciosDeCursos.obtenerTodasLasValoraciones(req.params.idCurso)
+    if (result.statusCode === 200) {
+        res.status(200).json(result.valoraciones)
+    } else {
+        res.status(500).json({ msg: result.msg })
+    }
+}
+
+const obtenerValoracionGeneral = async (req, res) => {
+    const result = await serviciosDeCursos.obtenerValoracionGeneral(req.params.idCurso)
+    console.log(result)
+    if (result.statusCode === 200) {
+        res.status(200).json({valoracion: result.valoracion,msg: result.msg})
+    } else {
+        res.status(500).json({ msg: result.msg })
+    }
+}
+
 module.exports = {
     obtenerTodosLosCursos,
     obtenerUnCurso,
@@ -95,4 +133,8 @@ module.exports = {
     agregarEliminarCursoCarrito,
     cambiarEstadoCurso,
     obtenerTodosLosCursosHabilitados,
+    whatsAppApi,
+    puntuarCurso,
+    obtenerTodasLasValoraciones,
+    obtenerValoracionGeneral
 }

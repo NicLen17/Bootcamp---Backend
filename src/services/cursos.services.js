@@ -215,6 +215,173 @@ const cambiarEstadoCurso = async (idCurso) => {
   }
 }
 
+const mensajeWhatsApp = async() => {
+  console.log(process.env.META_MY_CEL)
+  const result = await axios.post(`https://graph.facebook.com/v20.0/${process.env.META_ID_CEL}/messages`, {
+    messaging_product: 'whatsapp',
+    to: `${process.env.META_MY_CEL}`,
+    type: 'template',
+    template:{
+      name:'hello_world',
+      language: {
+        code: 'en_US'
+      }
+    }
+  },
+  configHeaderWhatsApp
+)
+if(result.status === 200){
+  return {
+    msg: 'Mensaje enviado!',
+    statusCode: 200
+  }
+}
+if(result.status === 400){
+  return {
+    msg: 'Error al enviar el mensaje!',
+    statusCode: 500
+  }
+}}
+
+const puntuarCurso = async (idUsuario, idCurso, body) => {
+  try {
+    const curso = await CursoModel.findById(idCurso)
+    const usuario = await Usuario.findById(idUsuario)
+
+    if (!curso) {
+      return {
+        msg: "Curso no encontrado",
+        statusCode: 404
+      };
+    }
+    
+    const cursoExiste = usuario.carrito.find((curso) => curso.id === idCurso)
+    const cursoComprado = usuario.cursos.find((curso) => curso.id === idCurso)
+
+    if(!cursoExiste) {
+      if(cursoComprado){
+        if (!curso.habilitado) {
+          return {
+            msg: "Curso deshabilitado",
+            statusCode: 500
+          };
+        }
+        if (!body.valoracion || body.valoracion < 1 || body.valoracion > 5) {
+          return {
+            msg: "Debes introducir una valoracion entre 1 y 5",
+            statusCode: 500
+          };
+        }
+        
+        const posicionValoracion = curso.valoracion.findIndex((valoracion) => valoracion.idUsuario === idUsuario)
+
+        if(posicionValoracion === -1){
+          curso.valoracion.push({
+            idUsuario: idUsuario,
+            valoracion: body.valoracion
+          })    
+          await curso.save()
+          return {
+            msg: "Curso puntuado",
+            statusCode: 200
+          }
+        } else {
+          curso.valoracion[posicionValoracion].valoracion = body.valoracion
+          curso.markModified('valoracion');
+          await curso.save()
+          return {
+            msg: "Curso puntuado (modificando puntuacion)",
+            statusCode: 200
+          }
+        }
+      } else {
+        return {
+          msg: "Debes haber comprado el curso para poder puntuarlo",
+          statusCode: 500
+        };
+      }
+      
+    } else {
+      return {
+        msg: "El curso no existe",
+        statusCode: 200
+      }
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      msg: "Error al puntuar curso",
+      statusCode: 500,
+      error
+    };
+  }  
+}
+
+const obtenerTodasLasValoraciones = async (idCurso) => {
+  try {
+    const curso = await CursoModel.findById(idCurso)
+
+    if (!curso) {
+      return {
+        msg: "Curso no encontrado",
+        statusCode: 404
+      };
+    }
+
+    return {
+      valoraciones: curso.valoracion,
+      statusCode: 200,
+    }
+  } catch (error) {
+    return {
+      msg: "Error al traer todas las valoraciones",
+      statusCode: 500,
+      error
+    };
+  }
+}
+
+const obtenerValoracionGeneral = async (idCurso) => {
+  try {
+    const curso = await CursoModel.findById(idCurso)
+
+    if (!curso) {
+      return {
+        msg: "Curso no encontrado",
+        statusCode: 404
+      };
+    }
+
+    if (curso.valoracion.length === 0) {
+      return {
+        msg: "El curso no tiene valoraciones",
+        valoracion: 0,
+        statusCode: 200
+      };
+    }
+
+    let totalValoracion = 0;
+
+    for (let i = 0; i < curso.valoracion.length; i++) {
+      totalValoracion += curso.valoracion[i].valoracion;
+    }
+
+    const promedioValoracion = totalValoracion / curso.valoracion.length;
+
+    return {
+      msg: `El curso tiene ${curso.valoracion.length} valoraciones`,
+      valoracion: Number(promedioValoracion.toFixed(2)),
+      statusCode: 200
+    };
+  } catch (error) {
+    return {
+      msg: "Error al traer todas las valoraciones",
+      statusCode: 500,
+      error
+    };
+  }
+}
+
 module.exports = {
   obtenerTodosLosCursos,
   obtenerUnCurso,
@@ -224,5 +391,9 @@ module.exports = {
   agregarImagen,
   agregarEliminarCursoDelCarrito,
   cambiarEstadoCurso,
-  obtenerTodosLosCursosHabilitados
+  obtenerTodosLosCursosHabilitados,
+  mensajeWhatsApp,
+  puntuarCurso,
+  obtenerTodasLasValoraciones,
+  obtenerValoracionGeneral
 }

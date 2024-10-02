@@ -72,7 +72,7 @@ const pagoProductosUsuario = async (nombre, emailUsuario) => {
     });
 }
 
-const recuperoContraseniaUsuario = async (nombre, emailUsuario) => {
+const recuperoContraseniaUsuario = async (emailUsuario, token) => {
     const info = await transporter.sendMail({
         from: `Recuperar contraselña" <${process.env.GMAIL_USER}>`, 
         to: `${emailUsuario}`,
@@ -84,7 +84,7 @@ const recuperoContraseniaUsuario = async (nombre, emailUsuario) => {
                 </div>
 
                 <div style="text-align: center; padding: 20px;">
-                    <p style="font-size: 22px; color: #fff;">Hola ${nombre},</p>
+                    <p style="font-size: 22px; color: #fff;">Hola!</p>
                     <p style="font-size: 18px; color: #fff;">Hemos recibido una solicitud para restablecer tu contraseña. Haz clic en el siguiente enlace para continuar con el proceso:</p>
                 </div>
 
@@ -93,7 +93,7 @@ const recuperoContraseniaUsuario = async (nombre, emailUsuario) => {
                 </div>
 
                 <div style="text-align: center; padding: 20px; font-size: 22px; color: #fff;">
-                    <p><a href="google.com" style="color: #ff6f61; text-decoration: none; font-weight: bold;">Restablecer Contraseña</a></p>
+                    <p><a href="http://tu_dominio/reset-password/${token}" style="color: #ff6f61; text-decoration: none; font-weight: bold;">Restablecer Contraseña</a></p>
                     <p>Si no solicitaste este cambio, por favor, ignora este mensaje.</p>
                 </div>
 

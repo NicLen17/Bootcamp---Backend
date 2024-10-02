@@ -33,6 +33,14 @@ const usuarioSchema = new mongoose.Schema({
     minlength: [6, "La contraseña debe tener al menos 6 caracteres"],
     maxlength: [75, "La contraseña no debe exceder los 75 caracteres"],
   },
+  resetPasswordToken: {
+    type: String,
+    default: null,
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null,
+  },
   bloqueado: {
     type: Boolean,
     default: false,

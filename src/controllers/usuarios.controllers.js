@@ -1,3 +1,4 @@
+const { token } = require('morgan')
 const serviceUsuario = require('../services/usuarios.services')
 const { validationResult } = require('express-validator')
 
@@ -126,6 +127,36 @@ const whatsAppApi = async (req, res) => {
   }
 }
 
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const result = await serviceUsuario.forgotPassword(email);
+
+  if (result.statusCode === 200) {
+    res.status(200).json({ 
+      token: result.token,
+      msg: result.msg 
+    });
+  } else {
+    res.status(result.statusCode).json({ msg: result.msg });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { password } = req.body;
+  const token = req.params.token;
+
+  const result = await serviceUsuario.resetPassword(password, token);
+
+  if (result.statusCode === 200) {
+    res.status(200).json({ msg: result.msg });
+  } else {
+    res.status(result.statusCode).json({ 
+      msg: result.msg,
+      error: result.error
+    });
+  }
+};
+
 module.exports = {
     listarUsuarios,
     obtenerUsuario,
@@ -137,5 +168,7 @@ module.exports = {
     obtenerCarrito,
     comprar,
     obtenerCursosUsuario,
-    whatsAppApi
+    whatsAppApi,
+    forgotPassword,
+    resetPassword
 }
