@@ -3,6 +3,7 @@ const express = require('express')
 const path = require('path')
 const cors = require('cors')
 const morgan = require('morgan')
+const logger = require('../src/utils/logger')
 const swaggerUI = require('swagger-ui-express')
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerSpec = require('../src/helpers/swagger')
@@ -25,7 +26,7 @@ class Server {
 
   listen() {
     this.app.listen(this.port, () => {
-      console.log('Server iniciado en el puerto', this.port)
+      logger.info('Server iniciado en el puerto', this.port)
     })
   }
 }

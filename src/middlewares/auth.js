@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const logger = require('../utils/logger')
 
 module.exports = (rol) => (req, res, next) => {
   try {
@@ -16,6 +17,6 @@ module.exports = (rol) => (req, res, next) => {
       return res.status(403).json({msg: 'No tienes el permiso suficiente'})
     }
   } catch (error) {
-    console.log(error)
+    logger.error(error)
   }
 }
