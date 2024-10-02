@@ -359,6 +359,47 @@
         }
       }
     }
+  },
+  "/api/usuarios/login": {
+    "post": {
+      "tags": ["Usuarios"],
+      "summary": "Inicio de sesión de usuario",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+                "properties": {
+                  "nombre": { "type": "string", "example": "pepe123" },
+                  "password": { "type": "string", "example": "123456a!" }
+                }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Usuario logueado",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "msg": { "type": "string" },
+                  "rol": { "type": "string" },
+                  "token": { "type": "string" },
+                  "idUsuario": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Usuario y/o contraseña incorrectos"
+        }
+      }
+    }
   }
 
 }
