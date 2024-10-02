@@ -531,6 +531,143 @@
         }
       }
     }
+  },
+  "/api/usuarios/{idUsuario}": {
+    "get": {
+      "tags": ["Usuarios"],
+      "summary": "Obtener un usuario por ID",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario",
+          "example": "66ea47211a92be5f802042a1"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Datos del usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al obtener el usuario"
+        }
+      }
+    },
+    "put": {
+      "tags": ["Usuarios"],
+      "summary": "Editar un usuario",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario a editar",
+          "example": "66fb4a3233697d74b7396b46"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Usuario"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Usuario editado con éxito"
+        },
+        "500": {
+          "description": "Error al editar el usuario"
+        }
+      }
+    }
+  },
+  "/api/usuarios/estado/{idUsuario}": {
+    "put": {
+      "tags": ["Usuarios"],
+      "summary": "Cambiar el estado de bloqueo de un usuario",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario a bloquear/desbloquear",
+          "example": "66fb4a3233697d74b7396b46"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Usuario bloqueado/desbloqueado"
+        },
+        "500": {
+          "description": "Error al cambiar el estado del usuario"
+        }
+      }
+    }
   }
-
 }

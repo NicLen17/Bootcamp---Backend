@@ -66,10 +66,11 @@ const cambiarEstadoUsuario = async (req, res) => {
 const editarUsuario = async (req, res) => {
   const id = req.params.idUsuario
   const result = await serviceUsuario.editarUsuario(id, req.body)
+  console.log(result)
   if (result.statusCode === 200) {
       res.status(200).json({ msg: result.msg })
   } else {
-      res.status(500).json({ msg: result.msg })
+      res.status(500).json({ msg: result.msg, error })
   }
 }
 
