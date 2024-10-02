@@ -439,6 +439,52 @@
         }
       }
     }
+  },
+  "/api/usuarios/carrito": {
+    "get": {
+      "tags": ["Usuarios"],
+      "summary": "Obtener el carrito del usuario",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZiNGEzMjMzNjk3ZDc0YjczOTZiNDYiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3ODI4MzQzfQ.45fbllxFTh6xJx7KDKR9DTAk3vpyw_nPTFnP_2-w6v4"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Carrito del usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "example": "66fc821c6a77ad167885f97c" },
+                    "nombre": { "type": "string", "example": "Introducción a Node.js" },
+                    "precio": { "type": "number", "example": 2500 }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Error al obtener el carrito"
+        }
+      }
+    }
   }
 
 }
