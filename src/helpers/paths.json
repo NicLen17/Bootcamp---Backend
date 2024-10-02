@@ -627,6 +627,45 @@
           "description": "Error al editar el usuario"
         }
       }
+    },
+    "delete": {
+      "tags": ["Usuarios"],
+      "summary": "Eliminar un usuario",
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idUsuario",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID del usuario a eliminar",
+          "example": "66fc8f2bc6131f758c4b4e66"
+        },
+        {
+          "name": "auth",
+          "in": "header",
+          "required": true,
+          "description": "Token de autenticación",
+          "schema": {
+            "type": "string"
+          },
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmVhNDcyMTFhOTJiZTVmODAyMDQyYTEiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTcyNzgyODg1M30.VU9l7UO4zScP4lDuWGPQRgmo1ZoGGaXl5pXopWvO_24"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Usuario eliminado con éxito"
+        },
+        "500": {
+          "description": "Error al eliminar el usuario"
+        }
+      }
     }
   },
   "/api/usuarios/estado/{idUsuario}": {

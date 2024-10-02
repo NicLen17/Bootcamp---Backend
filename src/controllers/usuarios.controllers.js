@@ -59,7 +59,7 @@ const cambiarEstadoUsuario = async (req, res) => {
   if (result.statusCode === 200) {
       res.status(200).json({ msg: result.msg })
   } else {
-      res.status(500).json({ msg: result.msg })
+      res.status(500).json({ msg: result.msg, error })
   }
 }
 
@@ -76,7 +76,7 @@ const editarUsuario = async (req, res) => {
 
 const eliminarUsuario = async (req, res) => {
   const id = req.params.idUsuario
-  const result = await serviceUsuario.eliminarUsuario(id, req.idUsuario, req.body)
+  const result = await serviceUsuario.eliminarUsuario(id, req.idUsuario)
   if (result.statusCode === 200) {
       res.status(200).json({ msg: result.msg })
   } else {

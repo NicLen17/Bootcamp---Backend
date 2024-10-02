@@ -188,8 +188,9 @@ const editarUsuario = async (id, body) => {
 const eliminarUsuario = async (id, idUsuarioToken, body) => {
   try {
     if(id !== idUsuarioToken){
+      const usuarioDatos = await Usuario.findById(id)
       const usuario = await Usuario.findByIdAndDelete(id);
-      await bajaUsuario(body.nombre, body.email); //Llamado a nodemailer
+      await bajaUsuario(usuarioDatos.nombre, usuarioDatos.email); //Llamado a nodemailer
       if (!usuario) {
         return { 
           msg: "Usuario no encontrado",
@@ -203,11 +204,12 @@ const eliminarUsuario = async (id, idUsuarioToken, body) => {
     } else {
       return {
         msg:'No puedes eliminar tu propio usuario',
-        statusCode: 500,
+        statusCode: 500
        }
     }
     
   } catch (error) {
+    console.log(error)
     return { msg: "Error al eliminar el usuario", statusCode: 500, error };
   }
 };

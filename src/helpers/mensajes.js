@@ -130,6 +130,7 @@ const bajaUsuario = async (nombre, emailUsuario) => {
             </div>
     `, // html body
     });
+    
 }
 
 module.exports = {
