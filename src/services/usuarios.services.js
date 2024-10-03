@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 const { registroUsuario, bajaUsuario, recuperoContraseniaUsuario, pagoProductosUsuario } = require("../helpers/mensajes")
 const { MercadoPagoConfig, Preference } = require("mercadopago")
 const CursoModel = require('../models/cursos.schema')
+const axios = require('axios')
+const { configHeaderWhatsApp } = require('../helpers/meta');
 
 const nuevoUsuario = async (body) => {
   try {
