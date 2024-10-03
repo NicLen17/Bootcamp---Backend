@@ -5,6 +5,8 @@ const { registroUsuario, bajaUsuario, recuperoContraseniaUsuario, pagoProductosU
 const { MercadoPagoConfig, Preference } = require("mercadopago")
 const CursoModel = require('../models/cursos.schema')
 const logger = require("../utils/logger")
+const axios = require('axios')
+const { configHeaderWhatsApp } = require('../helpers/meta');
 
 const nuevoUsuario = async (body) => {
   try {
