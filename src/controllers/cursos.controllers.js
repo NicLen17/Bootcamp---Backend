@@ -1,3 +1,5 @@
+const logger = require('../utils/logger')
+
 serviciosDeCursos = require('../services/cursos.services')
 
 
@@ -115,7 +117,7 @@ const obtenerTodasLasValoraciones = async (req, res) => {
 
 const obtenerValoracionGeneral = async (req, res) => {
     const result = await serviciosDeCursos.obtenerValoracionGeneral(req.params.idCurso)
-    console.log(result)
+    logger.debug(result)
     if (result.statusCode === 200) {
         res.status(200).json({valoracion: result.valoracion,msg: result.msg})
     } else {

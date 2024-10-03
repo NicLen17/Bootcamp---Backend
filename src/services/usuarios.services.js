@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const { registroUsuario, bajaUsuario, recuperoContraseniaUsuario, pagoProductosUsuario } = require("../helpers/mensajes")
 const { MercadoPagoConfig, Preference } = require("mercadopago")
 const CursoModel = require('../models/cursos.schema')
+const logger = require("../utils/logger")
 const axios = require('axios')
 const { configHeaderWhatsApp } = require('../helpers/meta');
 
@@ -213,7 +214,7 @@ const eliminarUsuario = async (id, idUsuarioToken, body) => {
     }
 
   } catch (error) {
-    console.log(error)
+    logger.error(error)
     return { msg: "Error al eliminar el usuario", statusCode: 500, error };
   }
 };
@@ -336,7 +337,7 @@ const obtenerCursosUsuario = async (idUsuario) => {
 }
 
 const mensajeWhatsApp = async() => {
-  console.log(process.env.META_MY_CEL)
+  logger.debug(process.env.META_MY_CEL)
   const result = await axios.post(`https://graph.facebook.com/v20.0/${process.env.META_ID_CEL}/messages`, {
     messaging_product: 'whatsapp',
     to: `${process.env.META_MY_CEL}`,
