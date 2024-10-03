@@ -205,7 +205,8 @@
           "schema": {
             "type": "string"
           },
-          "description": "ID del curso a obtener"
+          "description": "ID del curso que se quiere obtener",
+          "example": "66e53d1274b23ab08d4cea1e"
         }
       ],
       "responses": {
@@ -926,6 +927,47 @@
       "responses": {
         "200": {
           "description": "Mensaje enviado con éxito"
+        },
+        "500": {
+          "description": "Error al enviar el mensaje"
+        }
+      }
+    }
+  },
+  "/api/usuarios/forgot-password": {
+    "post": {
+      "tags": ["Usuarios"],
+      "summary": "Recuperar contraseña",
+      "description": "Sistema de recuperacion de contraseña mediante el correo.",
+      "operationId": "forgotPassword",
+      "requestBody": {
+        "description": "Correo del usuario",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { 
+              "type": "object",
+                "properties": {
+                  "email": { "type": "string", "example": "prueba1@dominio.com" }
+                }
+             }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Mensaje enviado con éxito",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "msg": { "type": "string", "example": "Correo de recuperación enviado!" },
+                  "token": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmUwNDllZTE2N2ZlYzNhYTllZDEzMyIsImlhdCI6MTcyNzkyMzQ1NywiZXhwIjoxNzI3OTI3MDU3fQ.tWAbvN-E_6hj14Txu4ozZAl1kxWcdF5VCe362ZsdD00"}
+                }
+              }
+            }
+          }
         },
         "500": {
           "description": "Error al enviar el mensaje"

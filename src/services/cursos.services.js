@@ -87,6 +87,9 @@ const eliminarCurso = async (id) => {
 
 const editarCurso = async (id, body) => {
   try {
+    delete body.alumnos;
+    delete body.valoracion;
+    
     const curso = await CursoModel.findByIdAndUpdate(id, body, { new: true });
     if (!curso) {
       return {
