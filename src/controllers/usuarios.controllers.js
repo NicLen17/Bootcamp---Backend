@@ -1,6 +1,7 @@
 const { token } = require('morgan')
 const serviceUsuario = require('../services/usuarios.services')
 const { validationResult } = require('express-validator')
+const logger = require('../utils/logger')
 
 const crearUsuario =  async (req, res) => {
   const errors = validationResult(req)
@@ -67,7 +68,7 @@ const cambiarEstadoUsuario = async (req, res) => {
 const editarUsuario = async (req, res) => {
   const id = req.params.idUsuario
   const result = await serviceUsuario.editarUsuario(id, req.body)
-  console.log(result)
+  logger.debug(result)
   if (result.statusCode === 200) {
       res.status(200).json({ msg: result.msg })
   } else {
