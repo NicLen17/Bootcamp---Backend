@@ -866,7 +866,7 @@
       }
     }
   },
-  "/api/usuarios/comprar/{idUsuario}": {
+  "/api/usuarios/comprar/": {
     "post": {
       "tags": ["Usuarios"],
       "summary": "Comprar los cursos del carrito",
@@ -876,16 +876,6 @@
         }
       ],
       "parameters": [
-        {
-          "name": "idUsuario",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          },
-          "description": "ID del usuario que realiza la compra",
-          "example": "66fb4a3233697d74b7396b46"
-        },
         {
           "name": "auth",
           "in": "header",
