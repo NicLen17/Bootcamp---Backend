@@ -582,10 +582,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "msg": { "type": "string" },
-                  "rol": { "type": "string" },
-                  "token": { "type": "string" },
-                  "idUsuario": { "type": "string" }
+                  "msg": { "type": "string", "example": "Usuario logueado" },
+                  "rol": { "type": "string", "example": "usuario" },
+                  "token": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI2NmZlMDQ5ZWUxNjdmZWMzYWE5ZWQxMzMiLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzI3OTI0MDg5fQ.Sw1H4uC9dAH2aQ3AD85JCNGrqu0WnxLQhIYqtdVRqkY" },
+                  "idUsuario": { "type": "string", "example": "66fe049ee167fec3aa9ed133" }
                 }
               }
             }
@@ -969,8 +969,66 @@
             }
           }
         },
+        "400": {
+          "description": "No se encontró un usuario con ese correo"
+        },
         "500": {
-          "description": "Error al enviar el mensaje"
+          "description": "Error en el envio de mail de recuperacion"
+        }
+      }
+    }
+  },
+  "/api/usuarios/reset-password/{token}": {
+    "post": {
+      "tags": ["Usuarios"],
+      "summary": "Cambiar contraseña",
+      "description": "Sistema de cambio de contraseña.",
+      "operationId": "resetPassword",
+      "requestBody": {
+        "description": "Contraseña nueva",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { 
+              "type": "object",
+                "properties": {
+                  "password": { "type": "string", "example": "12345a!" }
+                }
+             }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "token",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Token de recuperacion de contraseña",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmUwNDllZTE2N2ZlYzNhYTllZDEzMyIsImlhdCI6MTcyNzkyMzQ1NywiZXhwIjoxNzI3OTI3MDU3fQ.tWAbvN-E_6hj14Txu4ozZAl1kxWcdF5VCe362ZsdD00"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Mensaje enviado con éxito",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "msg": { "type": "string", "example": "Contraseña restablecida con exito!" }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Token inválido o ha expirado"
+        },
+        "500": {
+          "description": "Error al cambiar la contraseña"
         }
       }
     }

@@ -32,6 +32,6 @@ router.delete('/:idUsuario', auth('admin'), eliminarUsuario)
 router.post('/comprar', auth('usuario'), comprar)
 router.post('/whatsapp', whatsAppApi)
 router.post('/forgot-password', forgotPassword);
-router.post('/reset-password/:token', auth('usuario'), resetPassword);
+router.post('/reset-password/:token', resetPassword);
 
 module.exports = router;
