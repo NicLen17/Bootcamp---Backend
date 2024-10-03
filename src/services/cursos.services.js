@@ -182,7 +182,7 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
       }
     }
   } catch (error) {
-    console.log(error)
+    logger.error(error)
     return {
       msg: "Error al agregar/eliminar del carrito",
       statusCode: 500,
@@ -194,9 +194,9 @@ const agregarEliminarCursoDelCarrito = async (idCurso, idUsuario) => {
 const cambiarEstadoCurso = async (idCurso) => {
   try {
     const curso = await CursoModel.findById(idCurso)
-    console.log(curso)
+    logger.debug(curso)
     curso.habilitado = !curso.habilitado
-    console.log(curso)
+    logger.debug(curso)
     await curso.save()
 
     if(curso.habilitado) {
@@ -312,7 +312,7 @@ const puntuarCurso = async (idUsuario, idCurso, body) => {
       }
     }
   } catch (error) {
-    console.log(error)
+    logger.debug(error)
     return {
       msg: "Error al puntuar curso",
       statusCode: 500,
