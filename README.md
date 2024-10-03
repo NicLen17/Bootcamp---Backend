@@ -18,8 +18,6 @@ Este proyecto tiene como objetivo desarrollar el backend para el sistema de gest
 
 #### Kevin Stephan Torres 
 
-#### Gaston Rodrigo Monteiro
-
 ## Tablero de actividades
 
 *Acceso al [Tablero de actividades](https://trello.com/b/nHFPqo54/proyecto-back-1 "Tablero de actividades") en Trello.*
@@ -32,6 +30,10 @@ Este proyecto tiene como objetivo desarrollar el backend para el sistema de gest
 - Manejo de roles de los dsitintos usuarios.
 - Posibilidad para el usuario de comprar y calificar los cursos disponibles.
 
+### Deploy del proyecto como web service 🚀
+Podemos encontrar el proyecto desplegado en la plataforma Render en la siguiente URL: **https://bootcamp-backend-f796.onrender.com/**
+
+Tambien contamos con la documentacion del proyecto en la siguiente URL: **https://bootcamp-backend-f796.onrender.com/api/docs/** 
 
 ### Para desplegar el proyecto de forma local seguir los siguientes pasos 🦾
 
